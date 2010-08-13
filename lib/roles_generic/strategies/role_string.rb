@@ -1,3 +1,5 @@
+require 'set'
+
 module RoleModels::Generic
   module RoleString    
     def self.default_role_attribute
@@ -18,9 +20,10 @@ module RoleModels::Generic
         role = self.send(strategy_class.roles_attribute_name)
         [role.to_sym]
       end
-    end    
+      alias_method :roles_list, :roles
+    end
 
     extend RoleModels::Generic::Base::Configuration
-    configure self, :single
+    configure :num => :single
   end
 end

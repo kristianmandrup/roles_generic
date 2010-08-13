@@ -15,9 +15,9 @@ module RoleModels::Generic
       def roles
         self.send(strategy_class.roles_attribute_name).map{|r| r.to_sym}
       end
-    end    
+    end
 
     extend RoleModels::Generic::Base::Configuration
-    configure self            
+    configure            
   end
 end

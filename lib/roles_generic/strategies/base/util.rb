@@ -1,19 +1,19 @@
 module RoleModels::Generic::Base 
   module Configuration
-    def configure(base, option=nil) 
-      base.class_eval do
+    def configure(options={})
+      numericality = options[:num]
+      type = options[:type]
+      
+      class_eval do
         include RoleModels::Generic::Base
-        include base::Implementation
-
-        include RoleModels::Generic::Base::SingleRole if option == :single
+        include RoleModels::Generic::Base::SingleRole if numericality == :single
+        include RoleModels::Generic::Base::RoleClass::InstanceMethods if type == :role_class
+        include self::Implementation
         
         alias_method :role_symbols, :roles
-        alias_method :roles_list, :roles    
       end
-      base.extend RoleModels::Generic::Base::ClassMethods
-      
-      # base.extend base::ClassMethods
-      base.extend RoleModels::Generic::Base::DefaultRoleKeys
+      extend RoleModels::Generic::Base::ClassMethods
+      extend RoleModels::Generic::Base::DefaultRoleKeys
     end
   end
   
