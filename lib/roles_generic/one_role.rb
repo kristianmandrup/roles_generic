@@ -1,4 +1,5 @@
-require_all File.dirname(__FILE__) +'/one_role'
+require 'roles_generic/role/class_methods'
+require 'set'
 
 module RoleModels::Generic
   module OneRole

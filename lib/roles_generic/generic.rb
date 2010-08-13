@@ -6,6 +6,10 @@ module RoleModels
   module Base
     attr_accessor :orm_name
 
+    def valid_roles
+      strategy_class.valid_roles
+    end
+
     def roles(*roles)
       strategy_class.valid_roles = Array[*roles].flatten.map { |r| r.to_sym }
     end

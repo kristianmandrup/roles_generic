@@ -26,8 +26,8 @@ module RoleModels::Generic::Base
     #
     # declare valid roles
     def roles(*roles)
+      puts "roles: #{roles}"
       self.valid_roles = Array[*roles].flatten.map { |r| r.to_sym }
     end
-    
   end
 end

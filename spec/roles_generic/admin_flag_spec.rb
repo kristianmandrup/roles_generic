@@ -29,6 +29,8 @@ describe "Generic AdminFlag role strategy" do
       @admin_user.roles.should == [:admin]      
       @admin_user.admin?.should be_true
 
+      @admin_user.class.valid_roles.should == [:admin, :user]
+
       @admin_user.has_role?(:user).should be_false
 
       @admin_user.has_role?(:admin).should be_true

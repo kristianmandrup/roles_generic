@@ -1,4 +1,4 @@
-module MongoMapper 
+module RolesModel 
   module Generators
     class RolesGenerator < Rails::Generators::NamedBase
       desc "Add role strategy to a model" 
@@ -56,6 +56,7 @@ module MongoMapper
           #{role_strategy_statement}
           #{roles_statement}
         }
+      end
 
       def role_strategy
         options[:role_strategy]                

@@ -1,3 +1,6 @@
+require 'roles_generic/role/class_methods'
+require 'set'
+
 module RoleModels::Generic
   module ManyRoles
     def self.default_role_attribute

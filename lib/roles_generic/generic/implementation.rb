@@ -13,17 +13,13 @@ module RoleModels::Generic::Base
     end
 
     def valid_role? role
-      available_roles.include? role.to_sym
+      strategy_class.valid_roles.include? role.to_sym
     end
 
     def admin?
       is? :admin
     end
-       
-    def available_roles
-      strategy_class.valid_roles      
-    end
-    
+           
     alias_method :has?, :has_role?
     alias_method :is?, :has_roles?        
   end

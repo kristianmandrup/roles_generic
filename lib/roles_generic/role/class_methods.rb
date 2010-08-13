@@ -4,13 +4,9 @@ module RoleModels::Generic::Base
       def role_class
         self.class.role_class_name
       end      
-
-      def available_roles
-        role_class.valid_roles      
-      end    
     end
   
-    module ClassMethods
+    module ClassMethods 
       def role_class_name
         @role_class_name          
       end
