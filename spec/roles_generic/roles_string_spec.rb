@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'roles_generic/roles_string'
 
 class User
   include RoleModels::Generic 

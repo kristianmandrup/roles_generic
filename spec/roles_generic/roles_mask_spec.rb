@@ -1,4 +1,5 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
+require 'roles_generic/roles_mask'
 
 class User
   include RoleModels::Generic 
@@ -35,22 +36,22 @@ describe "Generic RolesMask role strategy" do
       @admin_user.has?(:admin).should be_true      
     end
 
-    # it "should have user role to :user" do
-    #   @user.roles_list.first.should == :user
-    #   @user.admin?.should be_false
-    # 
-    #   @user.has_role?(:user).should be_true    
-    #   @user.has_role?(:admin).should be_false
-    #   @user.is?(:admin).should be_false
-    #   
-    #   @user.has_roles?(:admin).should be_false
-    #   @user.has?(:admin).should be_false
-    # end
-    # 
-    # it "should set user role to :admin using roles=" do
-    #   @user.roles = :admin      
-    #   @user.roles_list.first.should == :admin           
-    #   @user.has_role?(:admin).should be_true      
-    # end    
+    it "should have user role to :user" do
+      @user.roles_list.first.should == :user
+      @user.admin?.should be_false
+    
+      @user.has_role?(:user).should be_true    
+      @user.has_role?(:admin).should be_false
+      @user.is?(:admin).should be_false
+      
+      @user.has_roles?(:admin).should be_false
+      @user.has?(:admin).should be_false
+    end
+    
+    it "should set user role to :admin using roles=" do
+      @user.roles = :admin      
+      @user.roles_list.first.should == :admin           
+      @user.has_role?(:admin).should be_true      
+    end    
   end
 end

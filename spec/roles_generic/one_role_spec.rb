@@ -1,25 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-
-require 'set'
-
-class Role
-  attr_accessor :name
-  
-  def self.find_role role_name    
-    roles.to_a.select{|r| r.name == role_name}.first
-  end  
-
-  class << self
-    attr_accessor :roles
-  end    
-  
-  def initialize name
-    @name = name
-    self.class.roles ||= Set.new
-    self.class.roles << self
-  end
-  
-end
+require 'roles_generic/one_role'
+require 'model/role'
 
 class User
   include RoleModels::Generic 

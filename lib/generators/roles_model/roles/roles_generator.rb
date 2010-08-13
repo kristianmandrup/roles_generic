@@ -1,9 +1,14 @@
 module MongoMapper 
   module Generators
     class RolesGenerator < Rails::Generators::NamedBase
-      desc "Generate roles model for User" 
+      desc "Add role strategy to a model" 
       
-      argument :role_strategy, :type => :string, :aliases => "-r", :default => 'inline_role', :desc => "Create roles model for user"
+      argument :role_strategy, :type => :string, :aliases => "-s", :default => 'role_string', :desc => "Role strategy to add"
+
+      # TODO: Should detect ORM from file content instead!
+      class_option :orm, :type => :string, :aliases => "-o", :default => nil, :desc => "ORM of model"
+
+      class_option :roles, :type => :array, :aliases => "-r", :default => [], :desc => "Valid roles"
 
       hook_for :orm
             
@@ -17,13 +22,40 @@ module MongoMapper
       
       protected                  
 
+      def orm
+        @orm ||= options[:orm].to_s.to_sym        
+      end
+
+      def roles
+        @orm ||= options[:roles].map{|r| ":#{r}" }
+      end
+
       def match_expr
-        /include MongoMapper::Document/
+        return name.camelize if !orm
+
+        case orm
+        when :mongo_mapper
+          /include MongoMapper::Document/
+        when :active_record
+          /ActiveRecord::Base/
+        else
+          raise ArgumentError, "Unrecognized orm option: #{orm}"
+        end
       end
 
       def role_strategy_statement 
         "role_strategy #{role_strategy}"        
       end
+
+      def roles_statement
+        roles ? "roles #{roles.join(',')}" : ''
+      end
+
+      def insert_text
+        %Q{include RoleModels::Generic 
+          #{role_strategy_statement}
+          #{roles_statement}
+        }
 
       def role_strategy
         options[:role_strategy]                

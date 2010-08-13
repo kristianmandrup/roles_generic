@@ -6,50 +6,6 @@ module RoleModels
   end
 end
 
-class Object
-  define_method :not do
-    Not.new(self)
-  end
-
-  class Not
-    private *instance_methods.select { |m| m !~ /(^__|^\W|^binding$)/ }
-
-    def initialize(subject)
-      @subject = subject
-    end
-
-    def method_missing(sym, *args, &blk)
-      !@subject.send(sym,*args,&blk)
-    end
-  end
-end
-
-class Object
-  # The hidden singleton lurks behind everyone
-  def metaclass; class << self; self; end; end
-  def meta_eval &blk; metaclass.instance_eval &blk; end
-
-  # Adds methods to a metaclass
-  def meta_def( name, &blk )
-    meta_eval { define_method name, &blk }
-  end
-
-  # Defines an instance method within a class
-  def class_def( name, &blk )
-    class_eval { define_method name, &blk }
-  end
-end
-
-
-class Object
-  def find_methods method, option=nil
-    methods = option == :singleton ? singleton_methods : methods             
-    return if !methods
-    methods.sort.grep(/#{method.to_s}/) if method.kind_of?(String) || method.kind_of?(Symbol)
-    methods.sort.grep(method) if method.kind_of?(Regexp)
-  end
-end  
-
 module RoleModels
   module Base
     attr_accessor :orm_name

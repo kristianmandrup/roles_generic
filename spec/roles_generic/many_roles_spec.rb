@@ -1,33 +1,6 @@
 require File.expand_path(File.dirname(__FILE__) + '/../spec_helper')
-
-require 'set'
-
-class Role
-  attr_accessor :name
-  
-  def self.find_role role_name    
-    roles.to_a.select{|r| r.name == role_name}.first
-  end  
-
-  def self.find_roles *role_names
-    result = Set.new
-    role_names.flatten.each do |role_name| 
-      found_role = find_role(role_name)
-      result << found_role if found_role
-    end
-    result
-  end
-
-  class << self
-    attr_accessor :roles
-  end    
-  
-  def initialize name
-    @name = name
-    self.class.roles ||= Set.new
-    self.class.roles << self
-  end  
-end
+require 'roles_generic/many_roles'
+require 'model/role'
 
 class User
   include RoleModels::Generic 
@@ -69,22 +42,22 @@ describe "Generic ManyRoles role strategy" do
       @admin_user.has?(:admin).should be_true      
     end
 
-    # it "should have user role to :user" do
-    #   @user.roles_list.first.should == :user
-    #   @user.admin?.should be_false
-    # 
-    #   @user.has_role?(:user).should be_true    
-    #   @user.has_role?(:admin).should be_false
-    #   @user.is?(:admin).should be_false
-    # 
-    #   @user.has_roles?(:admin).should be_false
-    #   @user.has?(:admin).should be_false
-    # end
-    # 
-    # it "should set user role to :admin using roles=" do
-    #   @user.roles = :admin      
-    #   @user.roles_list.first.should == :admin           
-    #   @user.has_role?(:admin).should be_true      
-    # end    
+    it "should have user role to :user" do
+      @user.roles_list.first.should == :user
+      @user.admin?.should be_false
+    
+      @user.has_role?(:user).should be_true    
+      @user.has_role?(:admin).should be_false
+      @user.is?(:admin).should be_false
+    
+      @user.has_roles?(:admin).should be_false
+      @user.has?(:admin).should be_false
+    end
+    
+    it "should set user role to :admin using roles=" do
+      @user.roles = :admin      
+      @user.roles_list.first.should == :admin           
+      @user.has_role?(:admin).should be_true      
+    end    
   end
 end
