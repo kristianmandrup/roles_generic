@@ -1,28 +1,18 @@
 require_all File.dirname(__FILE__) +'/admin_flag'
 
 module RoleModels::Generic
-  module AdminFlag
-    include RoleModels::Generic::Base
-    include Implementation
-    
+  module AdminFlag    
     module ClassMethods
       include RoleModels::Generic::Base::ClassMethods
+
       def default_role_attribute
         :admin_flag
       end
 
       def self.extended(base)
-        base.instance_eval do
-          def default_role_key
-            valid_roles.last || :user
-          end
-
-          def admin_role_key
-            valid_roles.first || :admin      
-          end            
-        end
+        base.extend RoleModels::Generic::Base::DefaultRoleKeys
       end
-    end  
+    end # ClassMethods
 
     module Implementation  
       def self.included(base)   
@@ -81,8 +71,10 @@ module RoleModels::Generic
       def available_roles
         strategy_class.valid_roles      
       end
-
-    end      
+    end # Implementation
+    
+    include RoleModels::Generic::Base
+    include Implementation        
   end   
 end
 

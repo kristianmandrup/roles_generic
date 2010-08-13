@@ -83,7 +83,7 @@ describe "Generic ManyRoles role strategy" do
     
     it "should set user role to :admin using roles=" do
       @user.roles = :admin      
-      @user.roles.first.should == :admin           
+      @user.roles_list.first.should == :admin           
       @user.has_role?(:admin).should be_true      
     end    
   end

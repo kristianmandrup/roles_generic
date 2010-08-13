@@ -1,8 +1,23 @@
-require_all File.dirname(__FILE__) +'/role_strings'
-
 module RoleModels::Generic
-  module RoleStrings
-    include RoleModels::Generic::Base
-    include Implementation
+  module RoleStrings    
+    def self.default_role_attribute
+      :role_strings
+    end    
+    
+    module Implementation
+      # assign roles
+      def roles=(*roles)
+        new_roles = roles.flatten.map{|r| r.to_s if valid_role?(r)}.compact
+        self.send("#{strategy_class.roles_attribute_name}=", Set.new(new_roles)) if new_roles && new_roles.not.empty?
+      end
+
+      # query assigned roles
+      def roles
+        self.send(strategy_class.roles_attribute_name).map{|r| r.to_sym}
+      end
+    end    
+
+    extend RoleModels::Generic::Base::Configuration
+    configure self            
   end
 end

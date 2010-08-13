@@ -7,17 +7,6 @@ module RoleModels
 end
 
 class Object
-  def method_missing(id, *a, &b)
-    if id.to_s =~ /not_(.*\?)/
-      !send($1)
-    else
-      super
-    end
-  end
-end
-
-
-class Object
   define_method :not do
     Not.new(self)
   end
@@ -32,6 +21,22 @@ class Object
     def method_missing(sym, *args, &blk)
       !@subject.send(sym,*args,&blk)
     end
+  end
+end
+
+class Object
+  # The hidden singleton lurks behind everyone
+  def metaclass; class << self; self; end; end
+  def meta_eval &blk; metaclass.instance_eval &blk; end
+
+  # Adds methods to a metaclass
+  def meta_def( name, &blk )
+    meta_eval { define_method name, &blk }
+  end
+
+  # Defines an instance method within a class
+  def class_def( name, &blk )
+    class_eval { define_method name, &blk }
   end
 end
 
@@ -60,13 +65,20 @@ module RoleModels
     def include_strategy orm, strategy, options=nil 
       begin     
         constant = "RoleModels::#{orm_name.to_s.camelize}::#{strategy.to_s.camelize}".constantize
-        instance_eval do          
-          eval %Q{
-            def strategy_class
-              #{constant} 
-            end
-          }          
-          include constant           
+
+        strategy_class_method = %Q{
+          def strategy_class
+            #{constant} 
+          end
+        }
+        
+        class_eval do
+          eval strategy_class_method
+        end
+
+        instance_eval do        
+          eval strategy_class_method
+          include constant
         end        
       rescue
         raise "No Role strategy module for ORM #{orm} found for strategy #{strategy}"
