@@ -1,6 +1,8 @@
 # Roles Model base
 
-Generic role strategies that share the same API and are easy to insert in any existing User model.
+Generic role strategies that share the same API and are easy to insert in any existing User model. 
+
+*Update: Now with a Rails 3 generator to instantly populate your user model of choice with a role strategy!*
 
 # Install
 
@@ -40,6 +42,30 @@ Creates and uses a binary field 'admin_flag', which when true signals that this 
     end 
   end
 </pre>
+
+## Example: Using an ORM
+
+Data Mapper with persistent attributes :name and :admin_flag
+
+<pre>
+  class User
+    include RoleModels::Generic 
+    include DataMapper::Resource
+
+    property :name, Boolean
+    property :admin_flag, Boolean
+
+    role_strategy :admin_flag, :default
+
+    roles :admin, :user
+
+    def initialize name, *new_roles
+      self.name = name
+      self.roles = new_roles
+    end 
+  end
+</pre>
+
 
 ## Example : role_string
 

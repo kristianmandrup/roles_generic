@@ -8,7 +8,9 @@ begin
     gem.homepage = "http://github.com/kristianmandrup/roles_for_mm"
     gem.authors = ["Kristian Mandrup"]
     gem.add_development_dependency "rspec", ">= 2.0.0.beta.19"
-    gem.add_dependency "require_all"
+    gem.add_development_dependency "generator-spec", ">= 0.5.1"
+    gem.add_dependency "require_all", ">= 1.1.0"
+    gem.add_dependency "activesupport", ">= 3.0.0.rc"    
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
