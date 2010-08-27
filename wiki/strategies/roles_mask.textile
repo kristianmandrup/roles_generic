@@ -1,0 +1,20 @@
+h2. Example : roles_mask
+
+Creates and uses an Integer field where each on bit signifies a role
+
+<pre>
+  class User
+    include RoleModels::Generic 
+
+    attr_accessor :name, :roles_mask
+
+    role_strategy :roles_mask, :default
+
+    roles :admin, :user
+
+    def initialize name, *new_roles
+      self.name = name
+      self.roles = new_roles
+    end 
+  end
+</pre>

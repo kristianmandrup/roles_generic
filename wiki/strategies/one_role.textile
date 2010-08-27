@@ -1,0 +1,40 @@
+h2. Example : one_role
+
+Creates and uses a single relation to a Role model for each user
+
+<pre>
+  class Role
+    attr_accessor :name
+
+    def self.find_role role_name    
+      roles.to_a.select{|r| r.name == role_name}.first
+    end  
+
+    class << self
+      attr_accessor :roles
+    end    
+
+    def initialize name
+      @name = name
+      self.class.roles ||= Set.new
+      self.class.roles << self
+    end
+
+  end
+
+  class User
+    include RoleModels::Generic 
+    role_strategy :one_role, :default
+
+    role_class :role   
+
+    attr_accessor :name, :one_role
+
+    roles :admin, :user 
+
+    def initialize name, *new_roles
+      self.name = name
+      self.roles = new_roles
+    end 
+  end
+</pre>

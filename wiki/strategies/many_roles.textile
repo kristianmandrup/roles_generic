@@ -1,0 +1,48 @@
+h2. Example : many_roles
+
+Creates and uses a single relation to a Role model for each user
+
+<pre>
+  class Role
+    attr_accessor :name
+  
+    def self.find_role role_name    
+      roles.to_a.select{|r| r.name == role_name}.first
+    end  
+
+    def self.find_roles *role_names
+      result = Set.new
+      role_names.flatten.each do |role_name| 
+        found_role = find_role(role_name)
+        result << found_role if found_role
+      end
+      result
+    end
+
+    class << self
+      attr_accessor :roles
+    end    
+  
+    def initialize name
+      @name = name
+      self.class.roles ||= Set.new
+      self.class.roles << self
+    end  
+  end     
+  
+  class User
+    include RoleModels::Generic 
+    role_strategy :many_roles, :default
+
+    role_class :role   
+
+    attr_accessor :name, :many_roles
+
+    roles :admin, :user 
+
+    def initialize name, *new_roles
+      self.name = name
+      self.roles = new_roles
+    end 
+  end  
+</pre>

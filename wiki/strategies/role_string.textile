@@ -1,0 +1,20 @@
+h2. Example : role_string
+
+Creates and uses a single role name, a string
+
+<pre>
+  class User
+    include RoleModels::Generic 
+
+    attr_accessor :name, :role_string
+
+    role_strategy :role_string, :default
+
+    roles :admin, :user
+
+    def initialize name, *new_roles
+      self.name = name
+      self.roles = new_roles
+    end 
+  end
+</pre>

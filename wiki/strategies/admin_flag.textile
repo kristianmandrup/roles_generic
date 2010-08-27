@@ -1,0 +1,20 @@
+h2. Example : admin_flag
+
+Creates and uses a binary field 'admin_flag', which when true signals that this user is an administrator and otherwise a normal user.
+
+<pre>
+  class User
+    include RoleModels::Generic 
+
+    attr_accessor :name, :admin_flag 
+
+    role_strategy :admin_flag, :default
+
+    roles :admin, :user
+
+    def initialize name, *new_roles
+      self.name = name
+      self.roles = new_roles
+    end 
+  end
+</pre>

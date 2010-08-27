@@ -1,0 +1,20 @@
+h2. Example : roles_string
+
+Creates and uses single comma separated String of role names
+
+<pre>
+  class User
+    include RoleModels::Generic 
+
+    attr_accessor :name, :roles_string
+
+    role_strategy :roles_string, :default
+
+    roles :admin, :user
+
+    def initialize name, *new_roles
+      self.name = name
+      self.roles = new_roles
+    end 
+  end
+</pre>
