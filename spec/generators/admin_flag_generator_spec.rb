@@ -30,7 +30,7 @@ describe 'role strategy generator: admin_flag' do
         puts "arguments: #{arguments}"
         g.run_generator arguments.args
         g.should generate_model :user do |clazz|
-          clazz.should include_module 'RoleModels::Generic'
+          clazz.should include_module 'Roles::Generic'
           puts "clazz: #{clazz}"        
           clazz.should have_call :roles, :args => ':admin, :user'
           clazz.should have_call :role_strategy, :args => ":#{strategy}"        
