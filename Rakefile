@@ -11,7 +11,7 @@ begin
     gem.add_development_dependency "generator-spec", "~> 0.5.1"
     gem.add_dependency "require_all", "~> 1.1.0"
     gem.add_dependency "activesupport", "~> 3.0.0"    
-    gem.add_dependency 'sugar-high', , "~> 0.2.2" 
+    gem.add_dependency 'sugar-high', "~> 0.2.2" 
     gem.add_dependency 'rails3_artifactor', '~> 0.1.1'
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end

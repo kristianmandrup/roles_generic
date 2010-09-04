@@ -12,11 +12,19 @@ I am in the process of developing multiple *roles_xxx* gems in order to support 
 
 Feel free to roll your own ORM extension for your favorite ORM!
 
-# Install
+## Status update (4 sept, 2010)
+
+Roles generic has now been refactored in order to tidy up the code base and make it even more generic, flexible and easy to extend.
+
+Currently I'm not sure if the generator fully works. It has a dependency on *rails3_artifactor*, which should work.
+However my gem to test generators (called *generator-spec*), is currently not functioning as it has dependencies to other gems that have undergone major
+refactorings lately. Let me know if the generator works or if not, see if you can make it work using *rails3_artifactor* and let me know the fix ;) 
+
+## Install
 
 <code>gem install roles_generic</code>
 
-# Usage
+## Usage
 
 The library comes with the following role models built-in:
 
@@ -38,7 +46,7 @@ Creates and uses a binary field 'admin_flag', which when true signals that this 
 
 <pre>
   class User
-    include RoleModels::Generic 
+    include Roles::Generic 
 
     attr_accessor :name, :admin_flag 
 
@@ -59,7 +67,7 @@ Data Mapper with persistent attributes :name and :admin_flag
 
 <pre>
   class User
-    include RoleModels::Generic 
+    include Roles::Generic 
     include DataMapper::Resource
 
     property :name, Boolean
