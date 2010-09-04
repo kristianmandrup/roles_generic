@@ -1,3 +1,5 @@
+require 'sugar-high/module'
+
 module Roles
   modules :generic do
     nested_modules :user, :role

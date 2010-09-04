@@ -1,19 +1,19 @@
-module RoleModels::Generic::User 
+module Roles::Generic::User 
   module Configuration
     def configure(options={})
       numericality = options[:num]
       type = options[:type]
       
       class_eval do
-        include RoleModels::Generic::User
-        include RoleModels::Generic::User::SingleRole if numericality == :single
-        include RoleModels::Generic::Role::InstanceMethods if type == :role_class
+        include Roles::Generic::User
+        include Roles::Generic::User::SingleRole if numericality == :single
+        include Roles::Generic::Role::InstanceMethods if type == :role_class
         include self::Implementation
         
         alias_method :role_symbols, :roles
       end
-      extend RoleModels::Generic::User::ClassMethods
-      extend RoleModels::Generic::User::DefaultRoleKeys
+      extend Roles::Generic::User::ClassMethods
+      extend Roles::Generic::User::DefaultRoleKeys
     end
   end
   

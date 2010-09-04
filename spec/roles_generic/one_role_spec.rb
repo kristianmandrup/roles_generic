@@ -4,7 +4,7 @@ use_roles_strategy :one_role
 require 'model/role'
 
 class User
-  include RoleModels::Generic 
+  include Roles::Generic 
   role_strategy :one_role, :default
 
   role_class :role   

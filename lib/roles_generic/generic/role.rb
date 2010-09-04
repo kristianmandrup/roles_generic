@@ -1,4 +1,4 @@
-module RoleModels::Generic::Role
+module Roles::Generic::Role
   module InstanceMethods
     def role_class
       self.class.role_class_name

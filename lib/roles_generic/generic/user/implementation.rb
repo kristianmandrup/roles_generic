@@ -1,4 +1,4 @@
-module RoleModels::Generic::User
+module Roles::Generic::User
   module Implementation
 
     # check if a given role has been assigned 

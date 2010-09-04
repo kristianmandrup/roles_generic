@@ -2,7 +2,7 @@ require 'spec_helper'
 use_roles_strategy :roles_mask
 
 class User
-  include RoleModels::Generic 
+  include Roles::Generic 
 
   attr_accessor :name, :roles_mask
    

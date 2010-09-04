@@ -10,7 +10,7 @@ module Roles::Generic
       base.extend ClassMethods
       base.class_eval do       
         class << self   
-          attr_accessor(*::RoleModels::Generic::Base::INHERITABLE_CLASS_ATTRIBUTES)
+          attr_accessor(*::Roles::Generic::User::INHERITABLE_CLASS_ATTRIBUTES)
           
           def apply_options options 
             roles_attribute default_role_attribute if options == :default

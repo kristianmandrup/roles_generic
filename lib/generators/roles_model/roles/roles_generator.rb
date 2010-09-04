@@ -1,7 +1,9 @@
+require 'rails3_artifactor'
+
 module RolesModel 
   module Generators
     class RolesGenerator < Rails::Generators::NamedBase
-      include Rails::Generators::MigrationHelper
+      include Rails3::Assist::Artifact::Model
       
       desc "Add role strategy to a model" 
       
@@ -51,7 +53,7 @@ module RolesModel
 
       def insertion_text
         %Q{  
-  include RoleModels::Generic 
+  include Roles::Generic 
   #{role_strategy_statement}
   #{roles_statement}
 }

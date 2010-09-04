@@ -1,7 +1,7 @@
-module RoleModels::Generic::User
+module Roles::Generic::User
   module ClassMethods
     def inherited(subclass) # :nodoc:
-      ::RoleModels::Base::INHERITABLE_CLASS_ATTRIBUTES.each do |attribute|
+      ::Roles::Generic::User::INHERITABLE_CLASS_ATTRIBUTES.each do |attribute|
         instance_var = "@#{attribute}"
         subclass.instance_variable_set(instance_var, instance_variable_get(instance_var))
       end

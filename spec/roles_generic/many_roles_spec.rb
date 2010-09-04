@@ -4,7 +4,7 @@ use_roles_strategy :many_roles
 require 'model/role'
 
 class User
-  include RoleModels::Generic 
+  include Roles::Generic 
   role_strategy :many_roles, :default
 
   role_class :role   

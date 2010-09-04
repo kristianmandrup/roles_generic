@@ -1,4 +1,3 @@
-require 'roles_generic/role/class_methods'
 require 'set'
 
 module RoleStrategy::Generic
