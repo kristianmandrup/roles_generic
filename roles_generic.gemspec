@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{roles_generic}
-  s.version = "0.1.1"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
-  s.date = %q{2010-08-14}
+  s.date = %q{2010-09-04}
   s.description = %q{Generic role strategies sharing the same API. Easy to insert in any model}
   s.email = %q{kmandrup@gmail.com}
   s.extra_rdoc_files = [
@@ -26,20 +26,23 @@ Gem::Specification.new do |s|
      "VERSION",
      "lib/generators/roles_model/roles/roles_generator.rb",
      "lib/roles_generic.rb",
-     "lib/roles_generic/admin_flag.rb",
      "lib/roles_generic/base.rb",
-     "lib/roles_generic/extensions/core_ext.rb",
      "lib/roles_generic/generic.rb",
-     "lib/roles_generic/generic/class_methods.rb",
-     "lib/roles_generic/generic/implementation.rb",
-     "lib/roles_generic/generic/util.rb",
-     "lib/roles_generic/many_roles.rb",
-     "lib/roles_generic/one_role.rb",
-     "lib/roles_generic/role/class_methods.rb",
-     "lib/roles_generic/role_string.rb",
-     "lib/roles_generic/role_strings.rb",
-     "lib/roles_generic/roles_mask.rb",
-     "lib/roles_generic/roles_string.rb",
+     "lib/roles_generic/generic/role.rb",
+     "lib/roles_generic/generic/user.rb",
+     "lib/roles_generic/generic/user/class_methods.rb",
+     "lib/roles_generic/generic/user/configuration.rb",
+     "lib/roles_generic/generic/user/implementation.rb",
+     "lib/roles_generic/namespaces.rb",
+     "lib/roles_generic/strategy.rb",
+     "lib/roles_generic/strategy/multi/many_roles.rb",
+     "lib/roles_generic/strategy/multi/role_strings.rb",
+     "lib/roles_generic/strategy/multi/roles_mask.rb",
+     "lib/roles_generic/strategy/multi/roles_string.rb",
+     "lib/roles_generic/strategy/single/admin_flag.rb",
+     "lib/roles_generic/strategy/single/one_role.rb",
+     "lib/roles_generic/strategy/single/role_string.rb",
+     "roles_generic.gemspec",
      "spec/generator_spec_helper.rb",
      "spec/generators/admin_flag_generator_spec.rb",
      "spec/generators/many_roles_generator_spec.rb",
@@ -56,7 +59,14 @@ Gem::Specification.new do |s|
      "spec/roles_generic/role_strings_spec.rb",
      "spec/roles_generic/roles_mask_spec.rb",
      "spec/roles_generic/roles_string_spec.rb",
-     "spec/spec_helper.rb"
+     "spec/spec_helper.rb",
+     "wiki/strategies/admin_flag.textile",
+     "wiki/strategies/many_roles.textile",
+     "wiki/strategies/one_role.textile",
+     "wiki/strategies/role_string.textile",
+     "wiki/strategies/role_strings.textile",
+     "wiki/strategies/roles_mask.textile",
+     "wiki/strategies/roles_string.textile"
   ]
   s.homepage = %q{http://github.com/kristianmandrup/roles_for_mm}
   s.rdoc_options = ["--charset=UTF-8"]
@@ -88,21 +98,27 @@ Gem::Specification.new do |s|
     s.specification_version = 3
 
     if Gem::Version.new(Gem::VERSION) >= Gem::Version.new('1.2.0') then
-      s.add_development_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
-      s.add_development_dependency(%q<generator-spec>, [">= 0.5.1"])
-      s.add_runtime_dependency(%q<require_all>, [">= 1.1.0"])
-      s.add_runtime_dependency(%q<activesupport>, [">= 3.0.0.rc"])
+      s.add_development_dependency(%q<rspec>, ["~> 2.0.0.beta.19"])
+      s.add_development_dependency(%q<generator-spec>, ["~> 0.5.1"])
+      s.add_runtime_dependency(%q<require_all>, ["~> 1.1.0"])
+      s.add_runtime_dependency(%q<activesupport>, ["~> 3.0.0"])
+      s.add_runtime_dependency(%q<sugar-high>, ["~> 0.2.2"])
+      s.add_runtime_dependency(%q<rails3_artifactor>, ["~> 0.1.1"])
     else
-      s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
-      s.add_dependency(%q<generator-spec>, [">= 0.5.1"])
-      s.add_dependency(%q<require_all>, [">= 1.1.0"])
-      s.add_dependency(%q<activesupport>, [">= 3.0.0.rc"])
+      s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.19"])
+      s.add_dependency(%q<generator-spec>, ["~> 0.5.1"])
+      s.add_dependency(%q<require_all>, ["~> 1.1.0"])
+      s.add_dependency(%q<activesupport>, ["~> 3.0.0"])
+      s.add_dependency(%q<sugar-high>, ["~> 0.2.2"])
+      s.add_dependency(%q<rails3_artifactor>, ["~> 0.1.1"])
     end
   else
-    s.add_dependency(%q<rspec>, [">= 2.0.0.beta.19"])
-    s.add_dependency(%q<generator-spec>, [">= 0.5.1"])
-    s.add_dependency(%q<require_all>, [">= 1.1.0"])
-    s.add_dependency(%q<activesupport>, [">= 3.0.0.rc"])
+    s.add_dependency(%q<rspec>, ["~> 2.0.0.beta.19"])
+    s.add_dependency(%q<generator-spec>, ["~> 0.5.1"])
+    s.add_dependency(%q<require_all>, ["~> 1.1.0"])
+    s.add_dependency(%q<activesupport>, ["~> 3.0.0"])
+    s.add_dependency(%q<sugar-high>, ["~> 0.2.2"])
+    s.add_dependency(%q<rails3_artifactor>, ["~> 0.1.1"])
   end
 end
 
