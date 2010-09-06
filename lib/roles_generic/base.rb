@@ -20,7 +20,8 @@ module Roles
          
     def include_strategy orm, strategy_name, options=nil 
       begin     
-        constant = "RoleStrategy::#{orm_name.to_s.camelize}::#{strategy_name.to_s.camelize}".constantize
+        module_name = "RoleStrategy::#{orm_name.to_s.camelize}::#{strategy_name.to_s.camelize}"
+        constant = module_name.constantize
 
         strategy_class_method = %Q{
           def strategy_class
@@ -37,7 +38,7 @@ module Roles
           include constant
         end        
       rescue
-        raise "No Role strategy module for ORM #{orm} found for strategy #{strategy_name}"
+        raise "No Role strategy module for ORM #{orm.to_s.camelize} for the strategy #{strategy_name}. Module #{module_name} has not been registered"
       end
       constant.apply_options(options) if constant.respond_to? :apply_options
     end    

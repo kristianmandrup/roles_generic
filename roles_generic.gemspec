@@ -26,6 +26,7 @@ Gem::Specification.new do |s|
      "VERSION",
      "lib/generators/roles_model/roles/roles_generator.rb",
      "lib/roles_generic.rb",
+     "lib/roles_generic/admin.rb",
      "lib/roles_generic/base.rb",
      "lib/roles_generic/generic.rb",
      "lib/roles_generic/generic/role.rb",
