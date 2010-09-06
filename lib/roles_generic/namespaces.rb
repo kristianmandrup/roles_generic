@@ -8,6 +8,5 @@ module Roles
 end   
 
 module RoleStrategy
-  module Generic
-  end
+  modules :generic
 end

@@ -4,11 +4,11 @@ use_roles_strategy :roles_mask
 class User
   include Roles::Generic 
 
-  attr_accessor :name, :roles_mask
+  attr_accessor :name
    
-  role_strategy :roles_mask, :default
+  strategy :roles_mask, :default
 
-  roles :admin, :user
+  valid_roles_are :admin, :user
   
   def initialize name, *new_roles
     self.name = name

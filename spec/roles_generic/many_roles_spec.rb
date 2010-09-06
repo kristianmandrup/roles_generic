@@ -1,35 +1,30 @@
 require 'spec_helper'
 use_roles_strategy :many_roles
 
-require 'model/role'
-
 class User
   include Roles::Generic 
-  role_strategy :many_roles, :default
+  strategy :many_roles, :default
 
   role_class :role   
     
-  attr_accessor :name, :many_roles
+  attr_accessor :name
 
-  roles :admin, :user 
+  valid_roles_are :admin, :user 
   
   def initialize name, *new_roles
     self.name = name
     self.roles = new_roles
   end 
-end
+end  
 
 
 describe "Generic ManyRoles role strategy" do
   context "default setup" do
 
-    before :each do          
-      Role.new :user
-      Role.new :admin    
-    
+    before :each do    
       @admin_user = User.new 'Admin user', :admin
-      @user = User.new 'User', :user
-    end
+      @user = User.new 'User', :user      
+    end 
 
     it "should have admin user role to :admin" do      
       @admin_user.roles_list.first.should == :admin      

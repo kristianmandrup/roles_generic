@@ -1,4 +1,5 @@
 require 'set'
+require 'roles_generic/role'
 
 module RoleStrategy::Generic
   module OneRole

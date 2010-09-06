@@ -1,4 +1,5 @@
 require 'set'
+require 'roles_generic/role'
 
 module RoleStrategy::Generic
   module ManyRoles
@@ -7,20 +8,23 @@ module RoleStrategy::Generic
     end
 
     module Implementation
+      def role_attribute
+        strategy_class.roles_attribute_name
+      end       
+      
       # assign roles
       def roles=(*roles)  
         raise "Role class #{role_class} does not have a #find_role(role) method" if !role_class.respond_to? :find_role
 
         role_relations = role_class.find_roles(*roles)
-
-        role_relations.each do |role_relation|        
-          self.send("#{strategy_class.roles_attribute_name}=", role_relation) if role_relation.kind_of?(role_class)
+        role_relations.each do |role_relation| 
+          self.send("#{role_attribute}=", role_relation) if role_relation.kind_of?(role_class)
         end      
       end
 
       # query assigned roles
       def roles
-        self.send(strategy_class.roles_attribute_name)
+        self.send(role_attribute)
       end
 
       def roles_list     

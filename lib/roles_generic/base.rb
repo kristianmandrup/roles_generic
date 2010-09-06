@@ -2,6 +2,10 @@ module Roles
   module Base
     attr_accessor :orm_name
 
+    def valid_roles_are(*role_list)
+      strategy_class.valid_roles = role_list.to_symbols
+    end
+
     def valid_roles
       strategy_class.valid_roles
     end

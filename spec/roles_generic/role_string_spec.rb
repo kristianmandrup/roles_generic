@@ -4,9 +4,9 @@ use_roles_strategy :role_string
 class User
   include Roles::Generic 
 
-  attr_accessor :name, :role_string
+  attr_accessor :name
    
-  role_strategy :role_string, :default
+  strategy :role_string, :default
 
   roles :admin, :user
   

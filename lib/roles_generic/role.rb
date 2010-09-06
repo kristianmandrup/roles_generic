@@ -1,8 +1,21 @@
+module Roles::Base
+  def valid_roles_are(*role_list)
+    strategy_class.valid_roles = role_list.to_symbols
+    if role_class_name
+      role_list.each do |name| 
+        role_class_name.new(name)
+      end
+    end
+  end
+end
+
 class Role
   attr_accessor :name
   
   def self.find_role role_name    
-    roles.to_a.select{|r| r.name == role_name}.first
+    roles.to_a.select do |r| 
+      r.name == role_name
+    end.first
   end  
 
   def self.find_roles *role_names

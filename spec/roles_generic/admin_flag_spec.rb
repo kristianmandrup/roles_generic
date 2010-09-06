@@ -4,11 +4,11 @@ use_roles_strategy :admin_flag
 class User
   include Roles::Generic 
 
-  attr_accessor :name, :admin_flag 
+  attr_accessor :name 
   
-  role_strategy :admin_flag, :default
+  strategy :admin_flag, :default
   
-  roles :admin, :user
+  valid_roles_are :admin, :user
   
   def initialize name, *new_roles
     self.name = name

@@ -31,36 +31,40 @@ module RolesModel
       
       protected                  
 
-      def strategy
-        options[:strategy]
-      end
-
       def orm
         @orm ||= options[:orm].to_s.to_sym        
       end
 
+      def default_roles
+        [:admin, :guest]        
+      end
+
+      def roles_to_add
+        default_roles.concat(options[:roles]).compact.uniq
+      end
+
       def roles
-        @roles ||= options[:roles].map{|r| ":#{r}" }
+        @roles ||= roles_to_add.map{|r| ":#{r}" }
       end
 
       def role_strategy_statement 
-        "role_strategy :#{strategy}\n"
+        "strategy :#{strategy}\n"
       end
 
       def roles_statement
-        roles ? "roles #{roles.join(',')}" : ''
+        roles ? "valid_roles #{roles.join(',')}" : ''
       end
 
       def insertion_text
         %Q{  
-  include Roles::Generic 
+  include Roles::#{orm.to_s.camelize} 
   #{role_strategy_statement}
   #{roles_statement}
 }
       end
 
-      def role_strategy
-        options[:role_strategy]                
+      def strategy
+        options[:strategy]                
       end
     end
   end

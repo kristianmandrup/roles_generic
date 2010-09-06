@@ -4,23 +4,27 @@ module RoleStrategy::Generic
       :admin_flag
     end
 
-    module Implementation  
+    module Implementation
+      def role_attribute
+        strategy_class.roles_attribute_name
+      end 
+        
       # assign roles
       def roles=(*new_roles)                                 
         first_role = new_roles.flatten.first
-        self.send("#{strategy_class.roles_attribute_name}=", new_roles.flatten.first.admin?) if valid_role? first_role
+        self.send("#{role_attribute}=", new_roles.flatten.first.admin?) if valid_role? first_role
       end
 
       # query assigned roles
       def roles
-        role = self.send(strategy_class.roles_attribute_name) ? strategy_class.admin_role_key : strategy_class.default_role_key
+        role = self.send(role_attribute) ? strategy_class.admin_role_key : strategy_class.default_role_key
         [role]
       end
       alias_method :roles_list, :roles
 
     end # Implementation
     
-    extend extend Roles::Generic::User::Configuration
+    extend Roles::Generic::User::Configuration
     configure :num => :single
   end   
 end
