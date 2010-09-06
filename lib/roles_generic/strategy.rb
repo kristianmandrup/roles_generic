@@ -38,9 +38,9 @@ end
 def use_roles_strategy strategy
   cardinality = Roles::Strategy.cardinality(strategy)  
   require "roles_generic/strategy/#{cardinality}/#{strategy}"
+  require "roles_generic/admin" if strategy =~ /admin/
 
   gem_name = Roles::Strategy.gem_name
-  require "#{gem_name}/admin" if strategy =~ /admin/  
   require "#{gem_name}/role" if !Roles::Strategy.inline_strategy? strategy  
   require "#{gem_name}/strategy/#{cardinality}/#{strategy}"
 end
