@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{roles_generic}
-  s.version = "0.2.0"
+  s.version = "0.2.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
-  s.date = %q{2010-09-05}
+  s.date = %q{2010-09-06}
   s.description = %q{Generic role strategies sharing the same API. Easy to insert in any model}
   s.email = %q{kmandrup@gmail.com}
   s.extra_rdoc_files = [
@@ -34,6 +34,7 @@ Gem::Specification.new do |s|
      "lib/roles_generic/generic/user/configuration.rb",
      "lib/roles_generic/generic/user/implementation.rb",
      "lib/roles_generic/namespaces.rb",
+     "lib/roles_generic/role.rb",
      "lib/roles_generic/strategy.rb",
      "lib/roles_generic/strategy/multi/many_roles.rb",
      "lib/roles_generic/strategy/multi/role_strings.rb",
@@ -51,7 +52,6 @@ Gem::Specification.new do |s|
      "spec/generators/role_strings_generator_spec.rb",
      "spec/generators/roles_mask_generator_spec.rb",
      "spec/generators/roles_string_generator_spec.rb",
-     "spec/model/role.rb",
      "spec/roles_generic/admin_flag_spec.rb",
      "spec/roles_generic/many_roles_spec.rb",
      "spec/roles_generic/one_role_spec.rb",
@@ -82,7 +82,6 @@ Gem::Specification.new do |s|
      "spec/generators/role_strings_generator_spec.rb",
      "spec/generators/roles_mask_generator_spec.rb",
      "spec/generators/roles_string_generator_spec.rb",
-     "spec/model/role.rb",
      "spec/roles_generic/admin_flag_spec.rb",
      "spec/roles_generic/many_roles_spec.rb",
      "spec/roles_generic/one_role_spec.rb",
