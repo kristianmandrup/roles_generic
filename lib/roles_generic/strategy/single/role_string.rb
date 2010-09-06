@@ -5,10 +5,6 @@ module RoleStrategy::Generic
     end
     
     module Implementation
-      def role_attribute
-        strategy_class.roles_attribute_name
-      end 
-                   
       # assign roles
       def roles=(*roles)
         first_role = roles.flatten.first.to_s                                    

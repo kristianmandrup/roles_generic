@@ -4,11 +4,7 @@ module RoleStrategy::Generic
       :admin_flag
     end
 
-    module Implementation
-      def role_attribute
-        strategy_class.roles_attribute_name
-      end 
-        
+    module Implementation        
       # assign roles
       def roles=(*new_roles)                                 
         first_role = new_roles.flatten.first

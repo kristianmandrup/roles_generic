@@ -4,11 +4,7 @@ module RoleStrategy::Generic
       :role_strings
     end    
     
-    module Implementation
-      def role_attribute
-        strategy_class.roles_attribute_name
-      end 
-      
+    module Implementation      
       # assign roles
       def roles=(*roles)
         new_roles = roles.flatten.map{|r| r.to_s if valid_role?(r)}.compact

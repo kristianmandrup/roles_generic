@@ -4,11 +4,7 @@ module RoleStrategy::Generic
       :many_roles
     end
 
-    module Implementation
-      def role_attribute
-        strategy_class.roles_attribute_name
-      end       
-      
+    module Implementation      
       # assign roles
       def roles=(*roles)  
         raise "Role class #{role_class} does not have a #find_role(role) method" if !role_class.respond_to? :find_role

@@ -19,10 +19,6 @@ module RoleStrategy::Generic
         end
       end
 
-      def role_attribute
-        strategy_class.roles_attribute_name
-      end 
-
       # assign roles
       def roles=(*roles)
         self.send("#{role_attribute}=", (roles.flatten.map { |r| r.to_sym } & strategy_class.valid_roles).map { |r| calc_index(r) }.inject { |sum, bitvalue| sum + bitvalue })

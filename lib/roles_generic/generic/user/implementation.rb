@@ -1,5 +1,8 @@
 module Roles::Generic::User
   module Implementation
+    def role_attribute
+      strategy_class.roles_attribute_name
+    end       
 
     # check if a given role has been assigned 
     # if a list of roles: check if ALL of the given roles have been assigned 
