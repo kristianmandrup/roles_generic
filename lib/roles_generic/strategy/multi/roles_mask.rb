@@ -1,5 +1,3 @@
-require 'set'
-
 module RoleStrategy::Generic
   module RolesMask
     def self.default_role_attribute
@@ -21,14 +19,19 @@ module RoleStrategy::Generic
         end
       end
 
+      def role_attribute
+        strategy_class.roles_attribute_name
+      end 
+
       # assign roles
       def roles=(*roles)
-        self.send("#{strategy_class.roles_attribute_name}=", (roles.flatten.map { |r| r.to_sym } & strategy_class.valid_roles).map { |r| calc_index(r) }.inject { |sum, bitvalue| sum + bitvalue })
+        self.send("#{role_attribute}=", (roles.flatten.map { |r| r.to_sym } & strategy_class.valid_roles).map { |r| calc_index(r) }.inject { |sum, bitvalue| sum + bitvalue })
       end
+      alias_method :role=, :roles=
 
       # query assigned roles
       def roles
-        strategy_class::Roles.new(self, strategy_class.valid_roles.reject { |r| ((self.send(strategy_class.roles_attribute_name) || 0) & calc_index(r)).zero? })
+        strategy_class::Roles.new(self, strategy_class.valid_roles.reject { |r| ((self.send(role_attribute) || 0) & calc_index(r)).zero? })
       end
 
       def roles_list

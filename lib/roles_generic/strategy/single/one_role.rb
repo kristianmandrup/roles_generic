@@ -1,13 +1,14 @@
-require 'set'
-require 'roles_generic/role'
-
 module RoleStrategy::Generic
   module OneRole
     def self.default_role_attribute
       :one_role
     end
 
-    module Implementation
+    module Implementation 
+      def role_attribute
+        strategy_class.roles_attribute_name
+      end 
+      
       # assign roles
       def roles=(*roles)      
         raise "Role class #{role_class} does not have a #find_role(role) method" if !role_class.respond_to? :find_role
@@ -15,14 +16,13 @@ module RoleStrategy::Generic
         first_role = roles.flatten.first
         role_relation = role_class.find_role(first_role)
         if role_relation && role_relation.kind_of?(role_class)
-          self.send("#{strategy_class.roles_attribute_name}=", role_relation)
+          self.send("#{role_attribute}=", role_relation)
         end        
       end
       
       # query assigned roles
       def roles
-        role = self.send(strategy_class.roles_attribute_name).name.to_sym
-        [role]
+        [self.send(role_attribute).name.to_sym]
       end
       
       def roles_list

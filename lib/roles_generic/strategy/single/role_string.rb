@@ -1,24 +1,26 @@
-require 'set'
-
 module RoleStrategy::Generic
   module RoleString    
     def self.default_role_attribute
       :role_string
     end
     
-    module Implementation             
+    module Implementation
+      def role_attribute
+        strategy_class.roles_attribute_name
+      end 
+                   
       # assign roles
       def roles=(*roles)
         first_role = roles.flatten.first.to_s                                    
         if valid_role? first_role
-          self.send("#{strategy_class.roles_attribute_name}=", first_role) 
+          self.send("#{role_attribute}=", first_role) 
         end
       end
+      alias_method :role=, :roles=
 
       # query assigned roles
       def roles
-        role = self.send(strategy_class.roles_attribute_name)
-        [role.to_sym]
+        [self.send(role_attribute).to_sym]
       end
       alias_method :roles_list, :roles
     end
