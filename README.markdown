@@ -3,12 +3,12 @@
 Generic role strategies that share the same API and are easy to insert in any existing User model. 
 Comes with a Rails 3 generator to instantly configure your Rails 3 app with a Role strategy of choice.
 
-I am in the process of developing multiple *roles_xxx* gems in order to support this generic API for various popular ORMs, such as:
+I have developed the following *roles* gems for popular ORMs that all support the same roles generic API.
 
-* Active Record (roles_ar)
-* DataMapper (roles_dm_)
-* Mongoid (roles_mongoid)
-* MongoMapper (roles_mm)
+* Active Record - [roles_active_record](http://github.com/kristianmandrup/roles_active_record)
+* DataMapper - [roles_data_mapper](http://github.com/kristianmandrup/roles_data_mapper)
+* Mongoid - [roles_mongoid](http://github.com/kristianmandrup/roles_mongoid)
+* MongoMapper - [roles_mongo_mapper](http://github.com/kristianmandrup/roles_mongo_mapper))
 
 Feel free to roll your own ORM extension for your favorite ORM!
 
@@ -16,8 +16,9 @@ Feel free to roll your own ORM extension for your favorite ORM!
 
 Roles generic has now been refactored in order to tidy up the code base and make it even more generic, flexible and easy to extend.
 
-Currently I'm not sure if the generator fully works. It has a dependency on *rails3_artifactor*, which should work.
-However my gem to test generators (called *generator-spec*), is currently not functioning as it has dependencies to other gems that have undergone major
+Currently I'm not sure if the generator fully works. It has a dependency on [rails3_artifator](http://github.com/kristianmandrup/rails3_artifator), which should work.
+However my gem to test generators (called [generator-spec](http://github.com/kristianmandrup/generator-spec), is currently not functioning as it has dependencies to other gems that have undergone major
+
 refactorings lately. Let me know if the generator works or if not, see if you can make it work using *rails3_artifactor* and let me know the fix ;) 
 
 ## Install
