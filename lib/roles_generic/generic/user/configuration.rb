@@ -7,7 +7,10 @@ module Roles::Generic::User
       class_eval do
         include Roles::Generic::User
         include Roles::Generic::User::SingleRole if numericality == :single
-        include Roles::Generic::Role::InstanceMethods if type == :role_class
+        if type == :role_class
+          include Roles::Generic::Role::InstanceMethods           
+        end
+        
         include self::Implementation
         
         alias_method :role_symbols, :roles
