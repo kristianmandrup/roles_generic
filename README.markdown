@@ -12,14 +12,10 @@ I have developed the following *roles* gems for popular ORMs that all support th
 
 Feel free to roll your own ORM extension for your favorite ORM!
 
-## Status update (4 sept, 2010)
 
-Roles generic has now been refactored in order to tidy up the code base and make it even more generic, flexible and easy to extend.
+## Status update (12 sept, 2010)
 
-Currently I'm not sure if the generator fully works. It has a dependency on [rails3_artifator](http://github.com/kristianmandrup/rails3_artifator), which should work.
-However my gem to test generators (called [generator-spec](http://github.com/kristianmandrup/generator-spec), is currently not functioning as it has dependencies to other gems that have undergone major
-
-refactorings lately. Let me know if the generator works or if not, see if you can make it work using *rails3_artifactor* and let me know the fix ;) 
+Roles generic has now been refactored in order to tidy up the code base and make it even more generic, flexible and easy to extend. It should now work! Please let me know if you have any issues ;)
 
 ## Install
 
@@ -29,17 +25,20 @@ refactorings lately. Let me know if the generator works or if not, see if you ca
 
 The library comes with the following role models built-in:
 
+Inline roles (in User model):
 * admin_flag (Boolean flag - 'admin' or not)
 * role_string (String)
 * roles_string (Comma separated String - note: no role name must have a comma in its name!)
 * role_strings (Set of Strings)
 * roles_mask (Integer mask)
+
+Using separate Role model:
 * one_role (relation to a Role model instance)
 * many_roles(Set of Role relationships)
 
 Note: The following examples use RSpec to demonstrate usage scenarios.
 
-Examples of configuring for the other strategies can be found in the wiki pages.
+Examples of configuring for the other strategies can be found on the wiki pages.
 
 ## Example : admin_flag
 
@@ -84,6 +83,8 @@ Data Mapper with persistent attributes :name and :admin_flag
     end 
   end
 </pre>
+
+_Note:_ I recommend using s specific ORM roles gem such as *roles_data_mapper* instead. But this approach might be a good starting point for developing a *roles* gem for an ORM that is not supported ;)
 
 ## Role API
 
