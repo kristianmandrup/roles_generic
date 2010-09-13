@@ -26,6 +26,11 @@ describe "Generic ManyRoles role strategy" do
       @user = User.new 'User', :user      
     end 
 
+    it "should return all registered roles" do
+      Role.all.should include(Role.roles.to_a[0])
+      Role.names.should include( :admin, :user )      
+    end
+
     it "should have admin user role to :admin" do      
       @admin_user.roles_list.first.should == :admin      
       @admin_user.admin?.should be_true

@@ -29,6 +29,14 @@ class Role
 
   class << self
     attr_accessor :roles
+    
+    def all
+      roles.to_a
+    end
+    
+    def names
+      roles.map(&:name)
+    end
   end    
   
   def initialize name
