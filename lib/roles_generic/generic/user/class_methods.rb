@@ -26,7 +26,6 @@ module Roles::Generic::User
     #
     # declare valid roles
     def roles(*roles) 
-      puts "role_class: #{role_class_name}"
       self.valid_roles = Array[*roles].flatten.map { |r| r.to_sym }
     end
   end

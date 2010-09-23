@@ -14,13 +14,13 @@ class Role
   
   def self.find_role role_name    
     roles.to_a.select do |r| 
-      r.name == role_name
+      r.name.to_sym == role_name.to_sym
     end.first
   end  
 
   def self.find_roles *role_names
     result = Set.new
-    role_names.flatten.each do |role_name| 
+    role_names.to_symbols.each do |role_name| 
       found_role = find_role(role_name)
       result << found_role if found_role
     end

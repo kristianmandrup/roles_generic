@@ -6,10 +6,11 @@ module RoleStrategy::Generic
 
     module Implementation       
       # assign roles
-      def roles=(*roles)      
-        raise "Role class #{role_class} does not have a #find_role(role) method" if !role_class.respond_to? :find_role
+      def roles=(*_roles)      
+        _roles = get_roles(_roles)
+        return nil if !_roles || _roles.empty?        
 
-        first_role = roles.flatten.first
+        first_role = _roles.flatten.first
         role_relation = role_class.find_role(first_role)
         if role_relation && role_relation.kind_of?(role_class)
           self.send("#{role_attribute}=", role_relation)
