@@ -5,11 +5,10 @@ class User
   include Roles::Generic 
   strategy :many_roles, :default
 
-  role_class :role   
-    
+  role_class :role       
   attr_accessor :name
 
-  valid_roles_are :admin, :user 
+  valid_roles_are :admin, :user, :guest 
   
   def initialize name, *new_roles
     self.name = name
@@ -17,48 +16,11 @@ class User
   end 
 end  
 
-
-describe "Generic ManyRoles role strategy" do
-  context "default setup" do
-
-    before :each do    
-      @admin_user = User.new 'Admin user', :admin
-      @user = User.new 'User', :user      
-    end 
-
-    it "should return all registered roles" do
-      Role.all.should include(Role.roles.to_a[0])
-      Role.names.should include( :admin, :user )      
-    end
-
-    it "should have admin user role to :admin" do      
-      @admin_user.roles_list.first.should == :admin      
-      @admin_user.admin?.should be_true
-
-      @admin_user.has_role?(:user).should be_false
-
-      @admin_user.has_role?(:admin).should be_true
-      @admin_user.is?(:admin).should be_true
-      @admin_user.has_roles?(:admin).should be_true
-      @admin_user.has?(:admin).should be_true      
-    end
-
-    it "should have user role to :user" do
-      @user.roles_list.first.should == :user
-      @user.admin?.should be_false
-    
-      @user.has_role?(:user).should be_true    
-      @user.has_role?(:admin).should be_false
-      @user.is?(:admin).should be_false
-    
-      @user.has_roles?(:admin).should be_false
-      @user.has?(:admin).should be_false
-    end
-    
-    it "should set user role to :admin using roles=" do
-      @user.roles = :admin      
-      @user.roles_list.first.should == :admin           
-      @user.has_role?(:admin).should be_true      
-    end    
-  end
-end
+describe "Roles Generic: :many_roles strategy" do
+  require "roles_generic/rspec/test_it"
+  
+  it "should return all registered roles" do
+    Role.all.should include(Role.roles.to_a[0])
+    Role.names.should include( :admin, :user )      
+  end  
+end    
