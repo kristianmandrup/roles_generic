@@ -1,6 +1,6 @@
 require 'rails3_artifactor'
 
-module RolesModel 
+module RolesGeneric 
   module Generators
     class RolesGenerator < Rails::Generators::NamedBase
       include Rails3::Assist::Artifact::Model
@@ -12,9 +12,6 @@ module RolesModel
 
 
       class_option :roles, :type => :array, :aliases => "-r", :default => [], :desc => "Valid roles"
-      # TODO: Should detect ORM from file content instead!
-      class_option :orm, :type => :string, :aliases => "-o", :default => nil, :desc => "ORM of model"
-
 
       # hook_for :orm
             
@@ -22,18 +19,13 @@ module RolesModel
         @source_root ||= File.expand_path("../../templates", __FILE__)
       end
 
-      def apply_role_strategy        
-        self.class.use_orm orm if orm
+      def apply_role_strategy
         insert_into_model name do
           insertion_text
         end
       end 
       
       protected                  
-
-      def orm
-        @orm ||= options[:orm].to_s.to_sym        
-      end
 
       def default_roles
         [:admin, :guest]        
@@ -52,7 +44,7 @@ module RolesModel
       end
 
       def roles_statement
-        roles ? "valid_roles #{roles.join(',')}" : ''
+        roles ? "valid_roles_are #{roles.join(',')}" : ''
       end
 
       def insertion_text

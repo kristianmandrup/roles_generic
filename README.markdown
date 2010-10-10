@@ -1,25 +1,33 @@
-# Generic Role strategies
+# Generic Roles
 
-Generic role strategies that share the same API and are easy to insert in any existing User model. 
-Comes with a Rails 3 generator to instantly configure your Rails 3 app with a Role strategy of choice.
+Generic Roles is a common (generic) Roles API and implementation that specific Roles implementations for various ORMs can implement.
+This library also comes with a Rails 3 generator that can configure an existing user model with a Role strategy of choice.
+A similar generator should always be created for specific ORM implementations 
 
-I have developed the following *roles* gems for popular ORMs that all support the same roles generic API.
+I have developed the following *roles* gems for popular ORMs that all support the same Roles Generic API.
 
 * Active Record - [roles_active_record](http://github.com/kristianmandrup/roles_active_record)
 * DataMapper - [roles_data_mapper](http://github.com/kristianmandrup/roles_data_mapper)
 * Mongoid - [roles_mongoid](http://github.com/kristianmandrup/roles_mongoid)
 * MongoMapper - [roles_mongo_mapper](http://github.com/kristianmandrup/roles_mongo_mapper))
 
-Feel free to roll your own ORM extension for your favorite ORM!
+Note: some may be more mature and tested than others. Please help in the maturation process...
 
-
-## Status update (12 sept, 2010)
-
-Roles generic has now been refactored in order to tidy up the code base and make it even more generic, flexible and easy to extend. It should now work! Please let me know if you have any issues ;)
+Also: Feel free to roll your own ORM extension for your favorite ORM!
 
 ## Install
 
 <code>gem install roles_generic</code>
+
+## Roles generator
+
+A Rails 3 generator is included to update an existing model with a roles strategy and a set of valid roles
+
+### Usage example
+
+<code>rails g roles_generic:roles --strategy admin_flag --roles guest admin</code>  
+
+This generator is currently (Oct. 10) experimental. Feel free to provide patches or bug reports ;)
 
 ## Usage
 
