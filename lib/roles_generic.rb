@@ -1,6 +1,7 @@
 require 'require_all'
 require 'active_support/inflector'
 require 'sugar-high/not'
+require 'sugar-high/array'
 require 'set'
 require 'roles_generic/namespaces'
 require 'roles_generic/base'

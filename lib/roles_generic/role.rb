@@ -10,9 +10,12 @@ module Roles::Base
 end
 
 class Role
+  include 
+
   attr_accessor :name
   
   def self.find_role role_name    
+    role_name = Roles::Generic::RoleUtil.extract_role(role_name)
     roles.to_a.select do |r| 
       r.name.to_sym == role_name.to_sym
     end.first

@@ -7,6 +7,17 @@ module Roles
       strategy_class.valid_roles = role_list.to_symbols
     end
 
+    def valid_role? role
+      strategy_class.valid_roles.include? role.to_sym
+    end
+
+    def valid_roles? *role_names
+      role_names.each do |role|
+        return false if !strategy_class.valid_roles.include? role.to_sym
+      end
+      true
+    end
+
     def valid_roles
       strategy_class.valid_roles
     end
