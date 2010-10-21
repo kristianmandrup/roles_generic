@@ -36,7 +36,8 @@ describe 'Roles Generic API : WRITE' do
           @admin_user.has?(:admin).should be_false
         end        
       when :multi
-        @admin_user.has?(:guest).should be_true
+        @admin_user.has_role?(:user).should be_true
+        @admin_user.has_role?(:guest).should be_true
         @admin_user.has?(:admin).should be_false        
       end
     end    

@@ -14,6 +14,10 @@ module RoleStrategy::Generic
       def present_roles roles_names
         roles_names.to_a.map{|role| role.name.to_s.to_sym}        
       end            
+      
+      def set_empty_roles
+        self.send("#{role_attribute}=", [])
+      end
     end
 
     extend Roles::Generic::User::Configuration

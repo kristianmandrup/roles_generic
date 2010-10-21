@@ -10,11 +10,11 @@ module Roles::Generic::User
       
       # should remove the current single role (set = nil) 
       # only if it is contained in the list of roles to be removed
-      def remove_roles *roles
-        roles = roles.flatten.compact
-        return nil if roles_diff(roles).empty?
-        roles_to_remove = select_valid_roles(roles)
-        self.roles = self.roles - roles_to_remove
+      def remove_roles *role_names
+        role_names = role_names.flat_uniq
+        set_empty_roles and return if roles_diff(role_names).empty?
+        roles_to_remove = select_valid_roles(role_names)
+        self.roles = roles_diff(role_names)
         true
       end
 

@@ -35,6 +35,10 @@ module RoleStrategy::Generic
         role_names = role_names.flatten.map{ |r| r.to_sym } & strategy_class.valid_roles
         role_names.map { |r| calc_index(r) }.inject { |sum, bitvalue| sum + bitvalue }
       end
+
+      def set_empty_roles
+        self.send("#{role_attribute}=", 0)
+      end
       
       def present_roles *role_names
         role_names.to_a.to_symbols

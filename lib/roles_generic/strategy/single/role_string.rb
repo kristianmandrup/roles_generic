@@ -19,6 +19,10 @@ module RoleStrategy::Generic
         role.split(',').map(&:to_sym)
       end
 
+      def set_empty_role
+        self.send("#{role_attribute}=", "")
+      end
+
       alias_method :present_roles, :present_role
     end
 

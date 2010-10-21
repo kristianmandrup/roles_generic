@@ -21,7 +21,11 @@ module RoleStrategy::Generic
       
       def present_roles *roles
         roles.map{|role| role ? :admin : :guest}
-      end
+      end   
+      
+      def set_empty_role
+        self.send("#{role_attribute}=", false)
+      end      
     end # Implementation
 
     extend Roles::Generic::User::Configuration

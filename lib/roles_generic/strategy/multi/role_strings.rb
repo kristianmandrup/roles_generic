@@ -14,6 +14,10 @@ module RoleStrategy::Generic
       def select_valid_roles *roles
         roles.flat_uniq.select{|role| valid_role? role }.map(&:to_sym)
       end                 
+      
+      def set_empty_roles
+        self.send("#{role_attribute}=", [])
+      end      
     end
 
     extend Roles::Generic::User::Configuration

@@ -25,12 +25,12 @@ module Roles::Generic::User
     end
 
     # should exchange the current role if in list with the first valid role in :with argument
-    def exchange_roles *roles
-      options = last_option roles
+    def exchange_roles *role_names
+      options = last_option role_names
       raise ArgumentError, "Must take an options hash as last argument with a :with option signifying which role(s) to replace with" if !options || !options.kind_of?(Hash)        
-      remove_roles(roles.to_symbols)        
-      options[:with] = options[:with] if options[:with].kind_of? Array        
-      add_roles options[:with]
+      remove_roles(role_names.to_symbols)        
+      with_roles = options[:with]
+      add_roles(with_roles)
     end
     
     def exchange_role role, options = {}
@@ -42,7 +42,8 @@ module Roles::Generic::User
     # check if a given role has been assigned 
     # if a list of roles: check if ALL of the given roles have been assigned 
     def has_roles?(*roles_names)
-      (roles_list - extract_roles(roles_names.flat_uniq)).empty?      
+      compare_roles = extract_roles(roles_names.flat_uniq)
+      (roles_list & compare_roles).not.empty?      
     end
 
     # check if any (at least ONE) of the given roles have been assigned

@@ -20,6 +20,10 @@ module RoleStrategy::Generic
       def present_roles *roles
         roles.map{|role| extract_role role}
       end                 
+      
+      def set_empty_role
+        self.send("#{role_attribute}=", nil)
+      end
     end
 
     extend Roles::Generic::User::Configuration

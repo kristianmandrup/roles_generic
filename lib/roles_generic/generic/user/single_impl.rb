@@ -11,8 +11,7 @@ module Roles::Generic::User
       # only if it is contained in the list of roles to be removed
       def remove_roles *role_names
         roles = role_names.flat_uniq
-        return nil if roles_diff(roles).empty?       
-        set_role(nil) if roles.include?(self.role)
+        set_empty_role if roles_diff(roles).empty?
         true
       end 
       
