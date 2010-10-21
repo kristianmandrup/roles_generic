@@ -7,8 +7,12 @@ module RoleStrategy::Generic
     module Implementation
       include Roles::Generic::User::Implementation::Multi
       
-      def new_roles *roles
-        role_class.find_role(*roles)        
+      def new_roles *role_names   
+        role_class.find_roles(extract_roles role_names)        
+      end            
+
+      def present_roles roles_names
+        roles_names.to_a.map{|role| role.name.to_s.to_sym}        
       end            
     end
 

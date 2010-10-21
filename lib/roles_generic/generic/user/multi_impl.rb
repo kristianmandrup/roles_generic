@@ -2,7 +2,7 @@ module Roles::Generic::User
   module Implementation
     module Multi           
       def add_roles *roles
-        new_roles = select_valid_roles(roles)
+        new_roles = select_valid_roles(roles)        
         if !new_roles.empty?
           self.roles = self.roles + new_roles
         end
@@ -20,8 +20,7 @@ module Roles::Generic::User
 
       def roles_list
         my_roles = [roles].flat_uniq
-        return [] if my_roles.empty?
-        has_role_class? ? my_roles.map{|r| r.name.to_sym } : my_roles          
+        my_roles.empty? ? [] : my_roles
       end      
     end
   end

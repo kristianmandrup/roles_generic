@@ -13,8 +13,8 @@ module RoleStrategy::Generic
         roles.flatten.map{|r| r.to_s}.join(',')        
       end
       
-      def present_roles
-        split(',').uniq.map{|r| r.to_sym}        
+      def present_roles role_names
+        role_names.split(',').uniq.map{|r| r.to_sym}        
       end      
     end
     

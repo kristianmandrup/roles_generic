@@ -5,6 +5,8 @@ module RoleStrategy::Generic
     end
 
     module Implementation 
+      include Roles::Generic::User::Implementation::Multi
+      
       class Roles < ::Set # :nodoc:
         attr_reader :model_instance
 
@@ -29,8 +31,13 @@ module RoleStrategy::Generic
         strategy_class::Roles.new(self, strategy_class.valid_roles.reject { |r| ((get_role || 0) & calc_index(r)).zero? })        
       end
       
-      def new_roles *roles
-        roles.flatten.map { |r| r.to_sym } & strategy_class.valid_roles).map { |r| calc_index(r) }.inject { |sum, bitvalue| sum + bitvalue }
+      def new_roles *role_names
+        role_names = role_names.flatten.map{ |r| r.to_sym } & strategy_class.valid_roles
+        role_names.map { |r| calc_index(r) }.inject { |sum, bitvalue| sum + bitvalue }
+      end
+      
+      def present_roles *role_names
+        role_names.to_a.to_symbols
       end      
     end    
     

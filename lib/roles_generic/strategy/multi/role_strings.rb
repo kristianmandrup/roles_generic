@@ -12,7 +12,7 @@ module RoleStrategy::Generic
       end      
 
       def select_valid_roles *roles
-        roles.flat_uniq.select{|role| role.valid? }.map(&:to_s)
+        roles.flat_uniq.select{|role| valid_role? role }.map(&:to_sym)
       end                 
     end
 

@@ -11,7 +11,7 @@ describe 'Roles Generic API : READ' do
       @admin_user.valid_role?(:guest).should be_true
     end
   end
-
+  
   describe '#valid_roles' do
     it "should be true that the admin user has a valid role of :guest" do      
       @admin_user.valid_roles.should include(:guest, :admin)

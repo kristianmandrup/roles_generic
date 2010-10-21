@@ -6,6 +6,13 @@ module Roles::Generic::RoleUtil
   end
 
   def extract_role role
+    role = case role
+    when Array
+      role.flat_uniq.first
+    else 
+      role
+    end  
+
     case role
     when Role
       raise 'Role instances should have a #name method that reflects the role name' if !role.respond_to? :name
