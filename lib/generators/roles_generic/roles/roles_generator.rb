@@ -15,10 +15,6 @@ module RolesGeneric
 
       # hook_for :orm
             
-      def self.source_root
-        @source_root ||= File.expand_path("../../templates", __FILE__)
-      end
-
       def apply_role_strategy
         insert_into_model name do
           insertion_text
@@ -43,6 +39,10 @@ module RolesGeneric
         "strategy :#{strategy}\n"
       end
 
+      def role_class_statement
+        [:one_role, :many_roles].include?(strategy.to_sym) ? 'role_class :role' : ''
+      end
+
       def roles_statement
         roles ? "valid_roles_are #{roles.join(',')}" : ''
       end
@@ -51,6 +51,7 @@ module RolesGeneric
         %Q{  
   include Roles::#{orm.to_s.camelize} 
   #{role_strategy_statement}
+  #{role_class_statement}
   #{roles_statement}
 }
       end

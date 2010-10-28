@@ -4,16 +4,20 @@ Generic Roles is a common (generic) Roles API and implementation that specific R
 This library also comes with a Rails 3 generator that can configure an existing user model with a Role strategy of choice.
 A similar generator should always be created for specific ORM implementations 
 
-I have developed the following *roles* gems for popular ORMs that all support the same Roles Generic API.
+I have developed the following *roles* gems for popular Object Mappers that all support the same Roles Generic API.
 
-* Active Record - [roles_active_record](http://github.com/kristianmandrup/roles_active_record)
-* DataMapper - [roles_data_mapper](http://github.com/kristianmandrup/roles_data_mapper)
-* Mongoid - [roles_mongoid](http://github.com/kristianmandrup/roles_mongoid)
-* MongoMapper - [roles_mongo_mapper](http://github.com/kristianmandrup/roles_mongo_mapper))
+Relational Database (SQL)
+* Active Record   - [roles_active_record](http://github.com/kristianmandrup/roles_active_record)
+* Data Mapper     - [roles_data_mapper](http://github.com/kristianmandrup/roles_data_mapper)
 
-Note: some may be more mature and tested than others. Please help in the maturation process...
+Mongo DB
+* Mongoid         - [roles_mongoid](http://github.com/kristianmandrup/roles_mongoid)
+* Mongo Mapper    - [roles_mongo_mapper](http://github.com/kristianmandrup/roles_mongo_mapper)  
 
-Also: Feel free to roll your own ORM extension for your favorite ORM!
+Couch DB
+* Simply Stored   - [roles_simply_stored](http://github.com/kristianmandrup/roles_simply_stored)
+
+Note: Feel free to roll your own ORM extension for your favorite Object Mapper!
 
 ## Install
 
@@ -69,7 +73,7 @@ Creates and uses a binary field 'admin_flag', which when true signals that this 
   end
 </pre>
 
-## Example: Using an ORM
+## Example: Using an Object Mapper
 
 Data Mapper with persistent attributes :name and :admin_flag
 
