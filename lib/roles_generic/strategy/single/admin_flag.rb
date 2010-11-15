@@ -21,7 +21,8 @@ module RoleStrategy::Generic
       
       def present_roles *roles
         roles.map{|role| role ? :admin : :guest}
-      end   
+      end
+      alias_method :present_role, :present_roles
       
       def set_empty_role
         self.send("#{role_attribute}=", false)

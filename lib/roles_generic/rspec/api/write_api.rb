@@ -22,19 +22,9 @@ describe 'Roles Generic API : WRITE' do
     end    
   
     it "should exchange user role :admin with roles :user and :guest" do
-      @admin_user.exchange_role :admin, :with => [:user, :guest]
-      @admin_user.has?(:admin).should be_false
-  
       case @admin_user.class.role_strategy.multiplicity
       when :single     
-        if @normal_user.class.role_strategy.name == :admin_flag
-          @admin_user.has?(:admin).should be_false
-          @admin_user.has?(:guest).should be_true
-        else
-          @admin_user.has?(:user).should be_true
-          @admin_user.has?(:guest).should be_false
-          @admin_user.has?(:admin).should be_false
-        end        
+        lambda { @admin_user.exchange_role :admin, :with => [:user, :guest] }.should raise_error
       when :multi
         @admin_user.has_role?(:user).should be_true
         @admin_user.has_role?(:guest).should be_true
@@ -49,7 +39,7 @@ describe 'Roles Generic API : WRITE' do
       @admin_user.has_role?(:admin).should_not be_true
     end    
   
-    it "should remove user role :admin using #remove_roles" do
+    it "should remove user role :admin using #remove_role" do
       @guest_user.add_role :admin
       @guest_user.has_role?(:admin).should be_true
       @guest_user.remove_role :admin

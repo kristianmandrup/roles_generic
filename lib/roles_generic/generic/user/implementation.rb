@@ -36,6 +36,9 @@ module Roles::Generic::User
     def exchange_role role, options = {}
       raise ArgumentError, '#exchange_role takes a single role String or Symbol as the first argument' if !role || role.kind_of?(Array)
       raise ArgumentError, '#exchange_role takes a an options hash with a :with option as the last argument' if !options || !options[:with]
+      if options[:with].kind_of?(Array) && self.class.role_strategy.multiplicity == :single                                                                                          
+        raise ArgumentError, '#exchange_role should only take a single role to exchange with for a Role strategy with multiplicity of one' if options[:with].size > 1
+      end 
       exchange_roles role, options
     end
 
@@ -82,7 +85,7 @@ module Roles::Generic::User
     def roles
       return [] if !get_roles
       get_roles.map do |role|
-        role.respond_to?(:sym) ? role.to_sym : role
+        role.respond_to?(:to_sym) ? role.to_sym : role
       end
     end
            
@@ -98,7 +101,7 @@ module Roles::Generic::User
     
     def get_role
       r = self.send(role_attribute)
-      respond_to?(:present_role) ? r.present_role : r
+      respond_to?(:present_role) ? present_role(r) : r
     end
 
     def get_roles
