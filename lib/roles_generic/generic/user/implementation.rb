@@ -84,7 +84,7 @@ module Roles::Generic::User
 
     # query assigned roles
     def roles
-      return [] if !get_roles
+      return [] if get_roles.nil?
       [get_roles].flatten.map do |role|
         role.respond_to?(:to_sym) ? role.to_sym : role
       end
