@@ -76,7 +76,8 @@ module Roles::Generic::User
 
     # assign multiple roles
     def roles=(*role_names)
-      role_names = extract_roles(role_names) 
+      role_names = role_names.flat_uniq
+      role_names = extract_roles(role_names)
       return nil if role_names.empty?
       set_roles(select_valid_roles role_names)
     end

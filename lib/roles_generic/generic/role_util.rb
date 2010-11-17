@@ -9,21 +9,21 @@ module Roles::Generic::RoleUtil
     role = case role
     when Array
       role.flat_uniq.first
-    else 
+    else
       role
-    end  
+    end
 
-    if defined?(Role) && role.kind_of?(Role) 
+    if defined?(Role) && role.kind_of?(Role)
       raise 'Role instances should have a #name method that reflects the role name' if !role.respond_to? :name
-      role.name.to_s.to_sym
-    end      
-    
+      return role.name.to_s.to_sym
+    end
+
     case role
     when String, Symbol
       role.to_sym
     else
       nil
-    end 
+    end
   end
   
   extend self
