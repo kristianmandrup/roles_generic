@@ -115,7 +115,7 @@ module Roles::Generic::User
     end
 
     def roles_diff *roles
-      self.roles - roles.flat_uniq
+      self.roles_list - extract_roles(roles.flat_uniq)
     end
     
     def select_valid_roles *role_names
