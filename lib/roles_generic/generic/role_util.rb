@@ -13,10 +13,12 @@ module Roles::Generic::RoleUtil
       role
     end  
 
-    case role
-    when Role
+    if defined?(Role) && role.kind_of?(Role) 
       raise 'Role instances should have a #name method that reflects the role name' if !role.respond_to? :name
       role.name.to_s.to_sym
+    end      
+    
+    case role
     when String, Symbol
       role.to_sym
     else
