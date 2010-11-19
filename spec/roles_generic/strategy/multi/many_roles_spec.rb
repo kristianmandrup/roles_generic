@@ -17,7 +17,7 @@ class User
 end  
 
 describe "Roles Generic: :many_roles strategy" do
-  require "roles_generic/rspec/api/full"
+  require "roles_generic/rspec/test_it"
   
   it "should return all registered roles" do
     Role.all.should include(Role.roles.to_a[0])

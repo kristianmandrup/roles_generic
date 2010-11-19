@@ -16,5 +16,5 @@ class User
 end
 
 describe "Roles Generic: :roles_mask strategy" do
-  require "roles_generic/rspec/api/full"
+  require "roles_generic/rspec/test_it"
 end
