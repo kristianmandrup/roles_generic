@@ -4,26 +4,19 @@ module RoleStrategy::Generic
       :many_roles
     end
 
-    module Implementation      
-      # assign roles
-      def roles=(*_roles)          
-        _roles = get_roles(_roles)
-        return nil if !_roles || _roles.empty?        
-        role_relations = role_class.find_roles(_roles)
-        role_relations.each do |role_relation| 
-          self.send("#{role_attribute}=", role_relation) if role_relation.kind_of?(role_class)
-        end      
-      end
+    module Implementation
+      include Roles::Generic::User::Implementation::Multi
+      
+      def new_roles *role_names   
+        role_class.find_roles(extract_roles role_names)        
+      end            
 
-      # query assigned roles
-      def roles
-        self.send(role_attribute)
-      end
-
-      def roles_list
-        _roles = [roles].flatten.compact
-        return [] if _roles.empty?
-        _roles.map{|r| r.name }.compact
+      def present_roles roles_names
+        roles_names.to_a.map{|role| role.name.to_s.to_sym}        
+      end            
+      
+      def set_empty_roles
+        self.send("#{role_attribute}=", [])
       end
     end
 

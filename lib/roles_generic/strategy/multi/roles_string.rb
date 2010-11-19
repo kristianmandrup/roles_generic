@@ -4,19 +4,22 @@ module RoleStrategy::Generic
       :roles_string
     end
 
-    module Implementation           
-      # assign roles
-      def roles=(*roles)
-        roles_str = roles.flatten.map{|r| r.to_s if valid_role?(r)}.compact.uniq.join(',')
-        self.send("#{role_attribute}=", roles_str) if roles_str && roles_str.not.empty?
-      end 
-      alias_method :role=, :roles=
+    module Implementation
+      include Roles::Generic::User::Implementation::Multi
+      
+      protected
 
-      # query assigned roles
-      def roles
-        self.send(role_attribute).split(',').uniq.map{|r| r.to_sym}
+      def new_roles *roles
+        roles.flatten.map{|r| r.to_s}.join(',')        
       end
-      alias_method :roles_list, :roles
+      
+      def present_roles role_names
+        role_names.split(',').uniq.map{|r| r.to_sym}        
+      end      
+
+      def set_empty_roles
+        self.send("#{role_attribute}=", "")      
+      end
     end
     
     extend Roles::Generic::User::Configuration

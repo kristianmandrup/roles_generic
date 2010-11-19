@@ -28,8 +28,8 @@ describe 'helper_generator' do
       g.run_generator arguments.args
       g.should generate_model :user do |clazz|
         clazz.should include_module 'RoleModels::Generic'
-        clazz.should have_call :roles, :args => ':admin, :user'
-        clazz.should have_call :role_strategy, :args => ":#{strategy}"        
+        clazz.should have_call :valid_roles_are, :args => ':admin, :user'
+        clazz.should have_call :strategy, :args => ":#{strategy}"        
       end
     end
   end

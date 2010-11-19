@@ -1,5 +1,5 @@
 require 'rspec/core'
-require 'generator_spec'
+require 'generator-spec'
 require 'roles_generic'
 
 RSpec::Generator.configure do |config|

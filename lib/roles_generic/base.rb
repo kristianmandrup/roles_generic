@@ -1,9 +1,21 @@
 module Roles
   module Base
     attr_accessor :orm_name
+    attr_reader :role_strategy
 
     def valid_roles_are(*role_list)
       strategy_class.valid_roles = role_list.to_symbols
+    end
+
+    def valid_role? role
+      strategy_class.valid_roles.include? role.to_sym
+    end
+
+    def valid_roles? *role_names
+      role_names.each do |role|
+        return false if !strategy_class.valid_roles.include? role.to_sym
+      end
+      true
     end
 
     def valid_roles
@@ -14,15 +26,41 @@ module Roles
       strategy_class.valid_roles = Array[*roles].flatten.map { |r| r.to_sym }
     end
     
-    def role_strategy strategy_name, options=nil
+    def set_role_strategy strategy_name, options=nil
       include_strategy orm_name, strategy_name, options
     end  
+
+    class RoleStrategyId
+      attr_accessor :name
+
+      def initialize strategy_name
+        @name = strategy_name.to_s.underscore.to_sym        
+      end
+
+      def type
+        @type ||= case name
+        when :one_role, :many_roles
+          :complex
+        else
+          return :simple if name
+        end
+      end
+
+      def multiplicity
+        @multiplicity ||= case name
+        when :many_roles, :role_strings, :roles_mask, :roles_string
+          :multi
+        when :one_role, :admin_flag, :role_string
+          :single
+        end      
+      end
+    end
          
     def include_strategy orm, strategy_name, options=nil 
       begin     
         module_name = "RoleStrategy::#{orm_name.to_s.camelize}::#{strategy_name.to_s.camelize}"
         constant = module_name.constantize
-
+        @role_strategy = RoleStrategyId.new strategy_name
         strategy_class_method = %Q{
           def strategy_class
             #{constant} 

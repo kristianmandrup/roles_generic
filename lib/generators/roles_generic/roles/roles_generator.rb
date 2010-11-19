@@ -1,6 +1,6 @@
 require 'rails3_artifactor'
 
-module RolesModel 
+module RolesGeneric 
   module Generators
     class RolesGenerator < Rails::Generators::NamedBase
       include Rails3::Assist::Artifact::Model
@@ -12,28 +12,16 @@ module RolesModel
 
 
       class_option :roles, :type => :array, :aliases => "-r", :default => [], :desc => "Valid roles"
-      # TODO: Should detect ORM from file content instead!
-      class_option :orm, :type => :string, :aliases => "-o", :default => nil, :desc => "ORM of model"
-
 
       # hook_for :orm
             
-      def self.source_root
-        @source_root ||= File.expand_path("../../templates", __FILE__)
-      end
-
-      def apply_role_strategy        
-        self.class.use_orm orm if orm
+      def apply_role_strategy
         insert_into_model name do
           insertion_text
         end
       end 
       
       protected                  
-
-      def orm
-        @orm ||= options[:orm].to_s.to_sym        
-      end
 
       def default_roles
         [:admin, :guest]        
@@ -51,14 +39,19 @@ module RolesModel
         "strategy :#{strategy}\n"
       end
 
+      def role_class_statement
+        [:one_role, :many_roles].include?(strategy.to_sym) ? 'role_class :role' : ''
+      end
+
       def roles_statement
-        roles ? "valid_roles #{roles.join(',')}" : ''
+        roles ? "valid_roles_are #{roles.join(',')}" : ''
       end
 
       def insertion_text
         %Q{  
   include Roles::#{orm.to_s.camelize} 
   #{role_strategy_statement}
+  #{role_class_statement}
   #{roles_statement}
 }
       end

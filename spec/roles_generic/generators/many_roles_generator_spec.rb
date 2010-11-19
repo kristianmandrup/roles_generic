@@ -2,7 +2,7 @@ require 'generator_spec_helper'
 require_generator :roles_model => :roles
 
 describe 'helper_generator' do
-  let(:strategy) { 'role_strings' }
+  let(:strategy) { 'many_roles' }
   
   use_orm :active_record
   helpers :model  
@@ -18,7 +18,7 @@ describe 'helper_generator' do
     remove_model 'user'
   end
         
-  it "should configure 'role_strings' strategy" do            
+  it "should configure 'many_roles' strategy" do
     create_model :user do
       '# content'
     end
@@ -28,8 +28,9 @@ describe 'helper_generator' do
       g.run_generator arguments.args
       g.should generate_model :user do |clazz|
         clazz.should include_module 'RoleModels::Generic'
-        clazz.should have_call :roles, :args => ':admin, :user'
-        clazz.should have_call :role_strategy, :args => ":#{strategy}"        
+        clazz.should have_call :valid_roles_are, :args => ':admin, :user'
+        clazz.should have_call :role_class, :args => ':role'        
+        clazz.should have_call :strategy, :args => ":#{strategy}"        
       end
     end
   end

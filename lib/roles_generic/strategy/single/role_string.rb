@@ -5,20 +5,25 @@ module RoleStrategy::Generic
     end
     
     module Implementation
-      # assign roles
-      def roles=(*roles)
-        first_role = roles.flatten.first.to_s                                    
-        if valid_role? first_role
-          self.send("#{role_attribute}=", first_role) 
-        end
+      include Roles::Generic::User::Implementation::Single
+      
+      def new_role role
+        role.to_s
       end
-      alias_method :role=, :roles=
 
-      # query assigned roles
-      def roles
-        [self.send(role_attribute).to_sym]
+      def new_roles *roles
+        new_role roles.flatten.first
       end
-      alias_method :roles_list, :roles
+      
+      def present_role role
+        role.split(',').map(&:to_sym)
+      end
+
+      def set_empty_role
+        self.send("#{role_attribute}=", "")
+      end
+
+      alias_method :present_roles, :present_role
     end
 
     extend Roles::Generic::User::Configuration

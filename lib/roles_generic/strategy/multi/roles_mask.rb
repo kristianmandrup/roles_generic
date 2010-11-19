@@ -5,6 +5,8 @@ module RoleStrategy::Generic
     end
 
     module Implementation 
+      include Roles::Generic::User::Implementation::Multi
+      
       class Roles < ::Set # :nodoc:
         attr_reader :model_instance
 
@@ -16,28 +18,30 @@ module RoleStrategy::Generic
         def <<(role)
           model_instance.roles = super.to_a
           self
-        end
+        end 
       end
-
-      # assign roles
-      def roles=(*roles)
-        self.send("#{role_attribute}=", (roles.flatten.map { |r| r.to_sym } & strategy_class.valid_roles).map { |r| calc_index(r) }.inject { |sum, bitvalue| sum + bitvalue })
-      end
-      alias_method :role=, :roles=
-
-      # query assigned roles
-      def roles
-        strategy_class::Roles.new(self, strategy_class.valid_roles.reject { |r| ((self.send(role_attribute) || 0) & calc_index(r)).zero? })
-      end
-
-      def roles_list
-        roles.to_a
-      end        
 
       protected
 
       def calc_index(r)
         2**strategy_class.valid_roles.index(r)
+      end
+
+      def get_roles
+        strategy_class::Roles.new(self, strategy_class.valid_roles.reject { |r| ((get_role || 0) & calc_index(r)).zero? })        
+      end
+      
+      def new_roles *role_names
+        role_names = role_names.flatten.map{ |r| r.to_sym } & strategy_class.valid_roles
+        role_names.map { |r| calc_index(r) }.inject { |sum, bitvalue| sum + bitvalue }
+      end
+
+      def set_empty_roles
+        self.send("#{role_attribute}=", 0)
+      end
+      
+      def present_roles *role_names
+        role_names.to_a.to_symbols
       end
     end    
     

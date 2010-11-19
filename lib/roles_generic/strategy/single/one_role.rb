@@ -4,27 +4,26 @@ module RoleStrategy::Generic
       :one_role
     end
 
-    module Implementation       
-      # assign roles
-      def roles=(*_roles)      
-        _roles = get_roles(_roles)
-        return nil if !_roles || _roles.empty?        
+    module Implementation      
+      include Roles::Generic::User::Implementation::Single
+      
+      protected
 
-        first_role = _roles.flatten.first
-        role_relation = role_class.find_role(first_role)
-        if role_relation && role_relation.kind_of?(role_class)
-          self.send("#{role_attribute}=", role_relation)
-        end        
-      end
+      def new_role role
+        role_class.find_role(role)        
+      end  
       
-      # query assigned roles
-      def roles
-        [self.send(role_attribute).name.to_sym]
-      end
+      def new_roles *roles
+        new_role roles.flatten.first
+      end     
       
-      def roles_list
-        self.roles.to_a
-      end      
+      def present_roles *roles
+        roles.map{|role| extract_role role}
+      end                 
+      
+      def set_empty_role
+        self.send("#{role_attribute}=", nil)
+      end
     end
 
     extend Roles::Generic::User::Configuration
@@ -33,5 +32,7 @@ module RoleStrategy::Generic
     def self.included(base)
       base.extend Roles::Generic::Role::ClassMethods
     end      
+    
+    include Roles::Generic::User::Implementation::Single
   end  
 end

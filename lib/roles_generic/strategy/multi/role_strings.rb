@@ -5,20 +5,23 @@ module RoleStrategy::Generic
     end    
     
     module Implementation      
-      # assign roles
-      def roles=(*roles)
-        new_roles = roles.flatten.map{|r| r.to_s if valid_role?(r)}.compact
-        self.send("#{role_attribute}=", ::Set.new(new_roles)) if new_roles && new_roles.not.empty?
-      end
-
-      # query assigned roles
-      def roles
-        self.send(role_attribute).map{|r| r.to_sym}
-      end
+      include Roles::Generic::User::Implementation::Multi
       
-      def roles_list     
-        [roles].flatten
+      def new_roles *roles
+        ::Set.new select_valid_roles(roles)
       end      
+
+      def select_valid_roles *roles
+        roles.flat_uniq.select{|role| valid_role? role }.map(&:to_sym)
+      end                 
+      
+      def set_empty_roles
+        self.send("#{role_attribute}=", [])
+      end   
+
+      def present_roles roles_names
+        roles_names.to_a
+      end
     end
 
     extend Roles::Generic::User::Configuration
