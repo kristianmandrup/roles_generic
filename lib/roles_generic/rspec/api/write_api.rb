@@ -26,6 +26,7 @@ describe 'Roles Generic API : WRITE' do
       when :single     
         lambda { @admin_user.exchange_role :admin, :with => [:user, :guest] }.should raise_error
       when :multi
+        @admin_user.exchange_role :admin, :with => [:user, :guest]
         @admin_user.has_role?(:user).should be_true
         @admin_user.has_role?(:guest).should be_true
         @admin_user.has?(:admin).should be_false        

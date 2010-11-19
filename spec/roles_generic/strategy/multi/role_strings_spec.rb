@@ -17,5 +17,5 @@ end
 
 
 describe "Roles Generic: :role_strings strategy" do
-  require "roles_generic/rspec/test_it"
+  require "roles_generic/rspec/api/full"  
 end

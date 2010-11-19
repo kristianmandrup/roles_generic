@@ -17,7 +17,11 @@ module RoleStrategy::Generic
       
       def set_empty_roles
         self.send("#{role_attribute}=", [])
-      end      
+      end   
+
+      def present_roles roles_names
+        roles_names.to_a
+      end
     end
 
     extend Roles::Generic::User::Configuration

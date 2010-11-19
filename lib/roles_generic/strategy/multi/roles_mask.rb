@@ -18,6 +18,10 @@ module RoleStrategy::Generic
         def <<(role)
           model_instance.roles = super.to_a
           self
+        end 
+        
+        def list
+          super.to_a
         end
       end
 
@@ -42,7 +46,7 @@ module RoleStrategy::Generic
       
       def present_roles *role_names
         role_names.to_a.to_symbols
-      end      
+      end
     end    
     
     extend Roles::Generic::User::Configuration

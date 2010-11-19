@@ -10,8 +10,6 @@ module Roles::Base
 end
 
 class Role
-  include 
-
   attr_accessor :name
   
   def self.find_role role_name    

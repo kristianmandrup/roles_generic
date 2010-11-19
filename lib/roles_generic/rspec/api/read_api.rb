@@ -1,3 +1,5 @@
+require "roles_generic/rspec/user_setup"    
+
 class Role
 end
 
@@ -31,6 +33,7 @@ describe 'Roles Generic API : READ' do
   describe '#has_role?' do     
     it "should have admin user role to :admin and not to :user" do            
       @admin_user.has_role?(:user).should be_false
+      puts "@admin_user: #{@admin_user.inspect} #{@admin_user.roles_list}"
       @admin_user.has_role?(:admin).should be_true
     end
   

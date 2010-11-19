@@ -85,9 +85,10 @@ module Roles::Generic::User
     # query assigned roles
     def roles
       return [] if get_roles.nil?
-      [get_roles].flatten.map do |role|
+      x = [get_roles].flatten.map do |role|
         role.respond_to?(:to_sym) ? role.to_sym : role
-      end
+      end    
+      x.first.kind_of?(Set) ? x.first.to_a : x
     end
            
     alias_method :has?, :has_role?
