@@ -5,9 +5,9 @@ begin
     gem.summary = %Q{Generic role strategies sharing the same API}
     gem.description = %Q{Generic role strategies sharing the same API. Easy to insert in any model}
     gem.email = "kmandrup@gmail.com"
-    gem.homepage = "http://github.com/kristianmandrup/roles_for_mm"
+    gem.homepage = "http://github.com/kristianmandrup/roles_generic"
     gem.authors = ["Kristian Mandrup"]
-    gem.add_development_dependency "rspec",           ">= 2.0.0"
+    gem.add_development_dependency "rspec",           ">= 2.0"
     gem.add_development_dependency "generator-spec",  ">= 0.7"
 
     gem.add_dependency "require_all",       "~> 1.2.0"

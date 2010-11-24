@@ -3,7 +3,7 @@ require 'sugar-high/array'
 
 module Roles::Strategy
   class << self  
-    NON_INLINE_STRATEGIES = [:one_role, :many_roles]
+    NON_INLINE_STRATEGIES = [:one_role, :many_roles, :embed_one_role, :embed_many_roles]
 
     def role_dir
       File.dirname(__FILE__)
@@ -12,6 +12,10 @@ module Roles::Strategy
     def gem_name
       :roles_generic
     end    
+
+    def embedded? strategy
+      strategy.to_s.include? 'embed'
+    end
     
     def role_strategies cardinality
       pattern = role_dir + "/strategy/#{cardinality}/*.rb"
@@ -41,6 +45,7 @@ def use_roles_strategy strategy
   require "roles_generic/admin" if strategy =~ /admin/
 
   gem_name = Roles::Strategy.gem_name
-  require "#{gem_name}/role" if !Roles::Strategy.inline_strategy? strategy  
+  prefix = Roles::Strategy.embedded?(strategy) ? 'embedded_' : ''
+  require "#{gem_name}/#{prefix}role" if !Roles::Strategy.inline_strategy?(strategy)  
   require "#{gem_name}/strategy/#{cardinality}/#{strategy}"
 end
