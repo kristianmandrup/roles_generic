@@ -40,7 +40,7 @@ module RolesGeneric
       end
 
       def role_class_statement
-        [:one_role, :many_roles].include?(strategy.to_sym) ? 'role_class :role' : ''
+        [:one_role, :many_roles, :embed_one_role, :embed_many_roles].include?(strategy.to_sym) ? 'role_class :role' : ''
       end
 
       def roles_statement

@@ -39,7 +39,7 @@ module Roles
 
       def type
         @type ||= case name
-        when :one_role, :many_roles
+        when :one_role, :many_roles, :embed_one_role, :embed_many_roles
           :complex
         else
           return :simple if name
@@ -48,9 +48,9 @@ module Roles
 
       def multiplicity
         @multiplicity ||= case name
-        when :many_roles, :role_strings, :roles_mask, :roles_string
+        when :many_roles, :role_strings, :roles_mask, :roles_string, :embed_many_roles
           :multi
-        when :one_role, :admin_flag, :role_string
+        when :one_role, :admin_flag, :role_string, :embed_one_role
           :single
         end      
       end
