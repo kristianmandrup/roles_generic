@@ -1,0 +1,125 @@
+h1. Generic Roles
+
+*Generic Roles* is a generic Roles API implementation that specific ORM Roles implementations can implement.
+This way you can easily change ORM and still keep the same underlying API.
+
+A Rails 3 generator is included that can configure an existing User model with a generic Role strategy of choice.
+Each ORM Roles implementation should have a similar generator for that particular ORM. 
+
+h2. Roles ORM implementations
+
+The following ORM specific Roles implementations are currently available
+
+h3. Relational Database (SQL)
+
+* "Active Record":http://github.com/kristianmandrup/roles_active_record
+* "Data Mapper":http://github.com/kristianmandrup/roles_data_mapper
+
+h3. Mongo DB
+
+* "Mongoid":(http://github.com/kristianmandrup/roles_mongoid
+* "Mongo Mapper":http://github.com/kristianmandrup/roles_mongo_mapper
+
+h3. Couch DB
+
+* "Simply Stored":http://github.com/kristianmandrup/roles_simply_stored
+
+_Note:_ 
+
+The 'simply_stored' implementation is only partly complete (admin_flag strategy works).
+Feel free to roll your own implementation for your favorite ORM/Data store.
+
+h2. Install
+
+<code>gem install roles_generic</code>
+
+h2. Role strategy configuration
+
+The following demonstrates some examples of role strategy configuration.
+
+_Note_: The DSL has been optimized a bit lately (Dec. 25)
+
+h3. Strategy: admin_flag
+
+Example: Default model configuration:
+
+<pre>class User
+  include Roles::Generic 
+    
+  strategy :admin_flag, :default
+  valid_roles_are :admin, :guest
+  ...
+end
+</pre>
+
+h3. Strategy: one_role
+
+Example: Customizing model names:
+
+<pre>class Bruger
+  include Roles::Generic 
+
+  strategy :one_role, :role_class => :rolle
+  valid_roles_are :admin, :guest
+  ...
+end
+</pre>
+
+Here the Role class is configured to be named 'Rolle' (danish). 
+If no :role_class options is passed, the default role class 'Role' is used (if the Role class is defined).
+
+Note: The customizing of the Role class model is not yet complete. The generator and such still needs to be updated... Feel free to assist!
+
+h2. Roles generator
+
+A Rails 3 generator is included to update an existing User model with a roles strategy and a set of valid roles.
+The Generic Roles generator doesn't work for a persistent model. In that case use a dedicated implementation for the ORM (data store) used (see above).
+
+h3. Usage example
+
+<code>rails g roles_generic:roles --strategy admin_flag --roles guest admin</code>  
+
+h2. Role strategies
+
+The following role strategies are built-in:
+
+Inline roles (attribute in User model):
+
+* admin_flag (Boolean flag - 'admin' or not)
+* role_string (String)
+* roles_string (comma separated String - note: no role name must have a comma in its name!)
+* role_strings (list of Strings)
+* roles_mask (Integer mask)
+
+Separate Role model:
+
+* one_role (single relation to a Role model instance)
+* many_roles (multiple Role relationships)
+
+Embedded Role model (Document stores only):
+
+* embed_one_role
+* embed_many_roles  
+
+Currently the embedded strategies have only been implemented for Mongoid.
+
+h2. Role API
+
+The Roles API is described in the Wiki
+
+* [Roles-Read-API](https://github.com/kristianmandrup/roles_generic/wiki/Roles-Read-API)
+* [Roles-Write-API](https://github.com/kristianmandrup/roles_generic/wiki/Roles-Write-API)
+
+h2. Note on Patches/Pull Requests
+ 
+* Fork the project.
+* Make your feature addition or bug fix.
+* Add tests for it. This is important so I don't break it in a
+  future version unintentionally.
+* Commit, do not mess with rakefile, version, or history.
+  (if you want to have your own version, that is fine but bump version in a commit by itself I can ignore when I pull)
+* Send me a pull request. Bonus points for topic branches.
+
+h2. Copyright
+
+Copyright (c) 2010 Kristian Mandrup. See LICENSE for details.

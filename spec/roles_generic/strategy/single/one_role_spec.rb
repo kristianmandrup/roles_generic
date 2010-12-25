@@ -1,11 +1,9 @@
 require 'spec_helper'
-use_roles_strategy :one_role
 
 class User
   include Roles::Generic 
   strategy :one_role, :default
 
-  role_class :role
   attr_accessor :name
 
   valid_roles_are :admin, :user, :guest 

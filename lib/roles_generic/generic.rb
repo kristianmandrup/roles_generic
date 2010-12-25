@@ -26,15 +26,37 @@ module Roles
       }
       
       def strategy name, options = {}
+        strategy_name = name.to_sym
+        raise ArgumentError, "Unknown role strategy #{strategy_name}" if !MAP.keys.include? strategy_name
+        use_roles_strategy strategy_name
+        
         if (options == :default || options[:config] == :default) && MAP[name]
-          instance_eval MAP[name] 
-        end
+          instance_eval MAP[strategy_name] 
+        end       
+        
         if !options.kind_of? Symbol
-          role_class = options[:role_class] ? options[:role_class].to_s.camelize.constantize : (Role if defined? Role)
+          @role_class_name = get_role_class(options)
+        else
+          @role_class_name = default_role_class if strategies_with_role_class.include? strategy_name
         end
 
         set_role_strategy name, options
       end    
+      
+      private
+
+      def default_role_class
+        return ::Role if defined? ::Role
+        raise Error, "Default Role class not defined"
+      end
+
+      def strategies_with_role_class
+        [:one_role, :embed_one_role, :many_roles,:embed_many_roles]
+      end 
+      
+      def get_role_class options
+        options[:role_class] ? options[:role_class].to_s.camelize.constantize : default_role_class
+      end
     end
   end
 end
