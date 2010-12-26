@@ -13,7 +13,7 @@ module Roles::Generic
           attr_accessor(*::Roles::Generic::User::INHERITABLE_CLASS_ATTRIBUTES)
           
           def apply_options options = {}
-            roles_attribute default_role_attribute if options == :default || options[:config] == :default                        
+            roles_attribute default_role_attribute if options == :default || options[:config] == :default || options == {}
           end             
         end
       end
