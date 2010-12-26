@@ -4,7 +4,7 @@ class User
 
   attr_accessor :name 
   
-  strategy :admin_flag
+  strategy :admin_flag, :role_class => :role
   valid_roles_are :admin, :user, :guest
   
   def initialize name, *new_roles
