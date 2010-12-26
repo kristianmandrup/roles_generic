@@ -34,7 +34,7 @@ module Roles
       attr_accessor :name
 
       def initialize strategy_name
-        @name = strategy_name.to_s.underscore.to_sym        
+        @name = strategy_name.to_s.underscore.to_sym
       end
 
       def type

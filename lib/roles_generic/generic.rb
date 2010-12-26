@@ -50,7 +50,7 @@ module Roles
       def default_options? options = {}
         return true if options == :default                           
         if options.kind_of? Hash
-          return true if options[:config] == :default || options == {} 
+          return true # if options[:config] == :default || options == {} 
         end
         false
       end
