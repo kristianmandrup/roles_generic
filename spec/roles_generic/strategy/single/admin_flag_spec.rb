@@ -1,12 +1,10 @@
 require 'spec_helper'
-use_roles_strategy :admin_flag
-
 class User
   include Roles::Generic 
 
   attr_accessor :name 
   
-  strategy :admin_flag, :default  
+  strategy :admin_flag
   valid_roles_are :admin, :user, :guest
   
   def initialize name, *new_roles

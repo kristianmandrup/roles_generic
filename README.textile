@@ -46,7 +46,7 @@ Example: Default model configuration:
 <pre>class User
   include Roles::Generic 
     
-  strategy :admin_flag, :default
+  strategy :admin_flag
   valid_roles_are :admin, :guest
   ...
 end
