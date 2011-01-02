@@ -17,8 +17,6 @@ module Roles::Generic
               roles_attribute options[:attribute] 
               return
             end
-
-            puts "default: #{default_options? options}, att: #{default_role_attribute}"
             roles_attribute default_role_attribute if default_options? options
           end
           
