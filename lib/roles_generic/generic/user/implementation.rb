@@ -42,9 +42,14 @@ module Roles::Generic::User
       exchange_roles role, options
     end
 
-    # check if a given role has been assigned 
-    # if a list of roles: check if ALL of the given roles have been assigned 
+    # check if all of the roles listed have been assigned to that user 
     def has_roles?(*roles_names)
+      compare_roles = extract_roles(roles_names.flat_uniq)
+      (compare_roles - roles_list).empty?      
+    end
+
+    # check if any of the roles listed have been assigned to that user
+    def has_any_role?(*roles_names)
       compare_roles = extract_roles(roles_names.flat_uniq)
       (roles_list & compare_roles).not.empty?      
     end

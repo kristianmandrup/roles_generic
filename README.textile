@@ -103,6 +103,8 @@ Embedded Role model (Document stores only):
 
 Currently the embedded strategies have only been implemented for Mongoid.
 
+See "Roles strategy configuration":https://github.com/kristianmandrup/roles_generic/wiki/Roles-strategy-configuration for more info
+
 h2. Role API
 
 The full Roles API is described in these Wiki pages:
