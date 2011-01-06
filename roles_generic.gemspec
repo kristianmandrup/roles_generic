@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{roles_generic}
-  s.version = "0.3.5"
+  s.version = "0.3.6"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Kristian Mandrup"]
-  s.date = %q{2010-12-26}
+  s.date = %q{2011-01-06}
   s.description = %q{Generic role strategies sharing the same API. Easy to insert in any model}
   s.email = %q{kmandrup@gmail.com}
   s.extra_rdoc_files = [
@@ -38,8 +38,10 @@ Gem::Specification.new do |s|
     "lib/roles_generic/generic/user/single_impl.rb",
     "lib/roles_generic/namespaces.rb",
     "lib/roles_generic/role.rb",
+    "lib/roles_generic/roles_base.rb",
     "lib/roles_generic/rspec/api/completeness.rb",
     "lib/roles_generic/rspec/api/full.rb",
+    "lib/roles_generic/rspec/api/group_api.rb",
     "lib/roles_generic/rspec/api/read_api.rb",
     "lib/roles_generic/rspec/api/simple_check.rb",
     "lib/roles_generic/rspec/api/user_class_api.rb",
