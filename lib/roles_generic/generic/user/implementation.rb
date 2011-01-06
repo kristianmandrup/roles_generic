@@ -42,6 +42,26 @@ module Roles::Generic::User
       exchange_roles role, options
     end
 
+    # is_in_group? :admin
+    def is_in_group? group
+      raise ArgumentError, 'Group id must be a String or Symbol' if !group.kind_of_label?
+      group_roles = self.class.role_groups[group]
+      # puts "group_roles: #{group_roles} for group: #{group}"
+      # puts "roles_list: #{roles_list}"
+      !(group_roles & roles_list).empty?
+    end
+
+    # is_in_groups? :editor, :admin, 
+    def is_in_groups? *groups
+      groups = groups.flat_uniq
+      groups.all? {|group| is_in_group? group}
+    end
+
+    def is_in_any_group? *groups
+      groups = groups.flat_uniq
+      groups.any? {|group| is_in_group? group}
+    end
+
     # check if all of the roles listed have been assigned to that user 
     def has_roles?(*roles_names)
       compare_roles = extract_roles(roles_names.flat_uniq)

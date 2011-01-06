@@ -1,10 +1,12 @@
 h1. Generic Roles
 
-*Generic Roles* is a generic Roles API implementation that specific ORM Roles implementations can implement.
-This way you can easily change ORM and still keep the same underlying API.
+*Generic Roles* (or simply Roles) is a generic Roles API implementation that specific ORM Roles implementations can implement.
+This way you can easily change ORM and still keep using the same underlying API.
 
 A Rails 3 generator is included that can configure an existing User model with a generic Role strategy of choice.
-Each ORM Roles implementation should have a similar generator for that particular ORM. 
+Each ORM Roles implementation should have its own generator suited for that particular ORM.
+
+Since Jan. 2011, Roles now includes a Group API that allows ordering roles into groups (see below).  
 
 h2. Roles ORM implementations
 
@@ -36,8 +38,6 @@ h2. Install
 h2. Role strategy configuration
 
 The following demonstrates some examples of role strategy configuration.
-
-_Note_: The DSL has been optimized a bit lately (Dec. 25)
 
 h3. Strategy: admin_flag
 
@@ -105,12 +105,47 @@ Currently the embedded strategies have only been implemented for Mongoid.
 
 See "Roles strategy configuration":https://github.com/kristianmandrup/roles_generic/wiki/Roles-strategy-configuration for more info
 
-h2. Role API
+h2. Roles APIs
 
 The full Roles API is described in these Wiki pages:
 
 * "Roles-Read-API":https://github.com/kristianmandrup/roles_generic/wiki/Roles-Read-API
 * "Roles-Write-API":https://github.com/kristianmandrup/roles_generic/wiki/Roles-Write-API
+* "Roles-Group-API":https://github.com/kristianmandrup/roles_generic/wiki/Roles-Group-API
+
+h3. Using Roles Groups
+
+The Group API allows roles to be grouped.
+
+Example:
+
+Say you have the _admin_ roles:
+
+* Admin
+* Super admin
+
+And the _customer_ roles
+
+* Individual customer
+* Company customer
+
+You might want to group them like this: 
+
+<pre>
+  User.add_role_group :customers => [:individual_customer, :company_customer]
+  User.add_role_group :admins => [:admin, :super_admin]  
+</pre>
+
+Then you can handle any user with regards to his/her role group relationship like this:
+
+<pre>
+  # do this only for users in the admin role group (user has either :admin or :super_admin role) 
+  current_user.is_in_group? :admin do
+    ...
+  end
+</pre>
+
+Expect this functionality to soon to be wrapped by Cream helper methods as well ;)
 
 h2. Note on Patches/Pull Requests
  

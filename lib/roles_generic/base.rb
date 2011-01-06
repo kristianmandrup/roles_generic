@@ -1,6 +1,7 @@
 module Roles
   module Base
     attr_accessor :orm_name
+    
     attr_reader :role_strategy
 
     def valid_roles_are(*role_list)

@@ -5,6 +5,7 @@ module Roles
     def self.included(base) 
       base.extend Roles::Base
       base.extend ClassMethods
+      
       base.orm_name = :generic
     end
 
@@ -24,6 +25,11 @@ module Roles
         :embed_many_roles   => "attr_accessor :many_roles",
         :embed_one_role     => "attr_accessor :one_role"        
       }
+
+      attr_accessor :role_groups
+      def role_groups
+        @role_groups ||= {}
+      end
       
       def strategy name, options = {}
         strategy_name = name.to_sym
@@ -44,6 +50,29 @@ module Roles
         
         set_role_strategy name, options
       end    
+
+      def add_role_groups(groups_hash)
+        raise ArgumentError, "Role group must be passed a Hash where the key is the group name" if !groups_hash.kind_of? Hash
+        groups_hash.each_pair do |key, list|
+          add_role_group(key => list)
+        end
+      end
+
+      # role_group :admin => :admin, :super_admin 
+      def add_role_group(group_hash)
+        raise ArgumentError, '#add_role_group must be passed a Hash where the key is the group name' if !group_hash.kind_of? Hash
+        raise ArgumentError, '#add_role_group must be a Hash with a single key value pair' if group_hash.size > 1
+
+        # first key/value pair?
+        group = group_hash.keys.first # see sugar_high
+
+        raise ArgumentError, "Role group identifier must be a String or Symbol " if !group.kind_of_label?      
+        role_list = group_hash.values.first
+        hash = {group.to_sym => [role_list].flat_uniq.to_symbols}
+
+        role_groups.merge!(hash)
+      end
+
       
       private
 
