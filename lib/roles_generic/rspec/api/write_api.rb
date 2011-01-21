@@ -13,6 +13,18 @@ describe 'Roles Generic API : WRITE' do
       @guest_user.roles = :guest            
     end    
   end
+
+  describe '#role=' do
+    it "should set user role to :admin" do
+      @guest_user.role = :admin      
+      @guest_user.has_role?(:admin).should be_true      
+      @guest_user.role = :guest            
+
+      u = User.new 'Test user'
+      u.role = :admin
+      u.has_role?(:admin).should be_true      
+    end    
+  end
   
   describe '#exchange_roles' do
     it "should exchange user role :user with role :admin" do
