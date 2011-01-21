@@ -12,7 +12,11 @@ module Roles::Generic::Role
 
     def role_class class_constant
       const = class_constant.to_s.camelize
-      @role_class_name = "#{const}".constantize
+      begin
+        @role_class_name = "#{const}".constantize
+      rescue
+        puts "Role class constant '#{const}' is not defined so it could not be set!"
+      end
     end
   end    
 end
