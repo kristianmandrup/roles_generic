@@ -1,0 +1,6 @@
+h1. Changelog
+
+h2. V. 0.3.7.3
+
+* Feb 9/2011 - merged johanlunds/master to support Rubygems 1.5 and resolve dependencies
+
