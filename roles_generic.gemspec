@@ -60,6 +60,7 @@ Gem::Specification.new do |s|
     "lib/roles_generic/strategy/single/embed_one_role.rb",
     "lib/roles_generic/strategy/single/one_role.rb",
     "lib/roles_generic/strategy/single/role_string.rb",
+    "roles_generic.gemspec",
     "spec/generator_spec_helper.rb",
     "spec/roles_generic/generators/admin_flag_generator_spec.rb",
     "spec/roles_generic/generators/many_roles_generator_spec.rb",
