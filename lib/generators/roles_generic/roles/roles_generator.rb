@@ -1,9 +1,9 @@
-require 'rails3_artifactor'
+require 'rails_artifactor'
 
 module RolesGeneric 
   module Generators
     class RolesGenerator < Rails::Generators::NamedBase
-      include Rails3::Assist::Artifact::Model
+      include RailsAssist::Artifact::Model
       
       desc "Add role strategy to a model" 
       
