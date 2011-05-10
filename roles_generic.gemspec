@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{roles_generic}
-  s.version = "0.3.8"
+  s.version = "0.3.9"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Kristian Mandrup"]
-  s.date = %q{2011-03-04}
+  s.authors = [%q{Kristian Mandrup}]
+  s.date = %q{2011-05-10}
   s.description = %q{Generic role strategies sharing the same API. Easy to insert in any model}
   s.email = %q{kmandrup@gmail.com}
   s.extra_rdoc_files = [
@@ -86,8 +86,8 @@ Gem::Specification.new do |s|
     "wiki/strategies/roles_string.textile"
   ]
   s.homepage = %q{http://github.com/kristianmandrup/roles_generic}
-  s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.6.1}
+  s.require_paths = [%q{lib}]
+  s.rubygems_version = %q{1.8.0}
   s.summary = %q{Generic role strategies sharing the same API}
   s.test_files = [
     "spec/generator_spec_helper.rb",
