@@ -118,6 +118,14 @@ module Roles::Generic::User
            
     alias_method :has?, :has_role?
     alias_method :is?,  :has_roles? 
+
+    def has_only_role? arg
+      raise ArgumentError, "Must take only a single argument that is a role name" if arg.send(:size) > 1 && arg.kind_of?(Array)
+      has_roles? [arg].flatten.first
+    end
+
+    alias_method :has_only?,  :has_only_role?
+    alias_method :is_only?,   :has_only_role?
     
     protected
 

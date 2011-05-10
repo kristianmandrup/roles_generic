@@ -51,8 +51,8 @@ describe 'Roles Generic API : READ' do
   end
   
   describe '#has_roles?' do
-    it "should be true that the normal user has the roles :guest and :user" do      
-      @normal_user.has_roles?(:guest, :user).should be_true
+    it "should be true that the normal user has the roles :guest and :user" do
+      @normal_user.has_roles?(:user).should be_true
     end
 
     it "should NOT be true that the normal user has the roles :guest and :admin" do      
@@ -64,13 +64,40 @@ describe 'Roles Generic API : READ' do
     end
   end
 
-  describe '#has_roles?' do
+  describe '#has_only_role?' do
+    it "should be false that the normal user has only the role :guest" do      
+      @normal_user.has_only_role?(:guest).should be_false
+    end
+
+    it "should Raise Error if passed an Array of roles" do      
+      lambda { @normal_user.has_only_role?(:guest, :admin)}.should raise_error
+    end
+  
+    it "should be true that the Guest user has only the role :guest" do
+      @guest_user.has_only_role?(:guest).should be_true
+    end
+  end
+
+  describe '#has_only?' do
+    it "should be true that the Guest user only has the role :guest" do
+      @guest_user.has_only?(:guest).should be_true
+    end
+  end
+
+  describe '#is_only?' do
+    it "should be true that the Guest user only is in the role :guest" do
+      @guest_user.is_only?(:guest).should be_true
+    end
+  end
+
+
+  describe '#has_any_role?' do
     it "should be true that the normal user has the roles :guest and :user" do      
       @normal_user.has_any_role?(:guest, :user).should be_true
     end
 
-    it "should be true that the normal user has one of the roles :guest or :admin" do      
-      @normal_user.has_any_role?(:guest, :admin).should be_true
+    it "should be true that the normal user has one of the roles :user or :admin" do      
+      @normal_user.has_any_role?(:user, :admin).should be_true
     end
   
     it "should NOT be true that the user has the roles :admin" do

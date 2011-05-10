@@ -1,6 +1,10 @@
 h1. Changelog
 
-h2. V. 0.3.7.3
+h2. May 10, 2011
 
-* Feb 9/2011 - merged johanlunds/master to support Rubygems 1.5 and resolve dependencies
+Version 0.3.9
+
+* Added #has_only_role? method which tests that the role subject only has the single role passed as argument
+  alias methods: #is_only? #has_only?
+
 
