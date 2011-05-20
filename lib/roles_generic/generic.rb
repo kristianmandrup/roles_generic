@@ -27,8 +27,14 @@ module Roles
       }
 
       attr_accessor :role_groups
+
       def role_groups
         @role_groups ||= {}
+      end
+      alias_method :valid_role_groups, :role_groups
+
+      def valid_role_group? group_name
+        valid_role_groups.include? group_name.to_sym
       end
       
       def strategy name, options = {}

@@ -50,6 +50,7 @@ module Roles::Generic::User
       # puts "roles_list: #{roles_list}"
       !(group_roles & roles_list).empty?
     end
+    alias_method :is_member_of?, :is_in_group?
 
     # is_in_groups? :editor, :admin, 
     def is_in_groups? *groups
