@@ -26,15 +26,28 @@ module Roles
         :embed_one_role     => "attr_accessor :one_role"        
       }
 
-      attr_accessor :role_groups
+      attr_accessor :role_groups, :valid_role_groups
 
       def role_groups
         @role_groups ||= {}
       end
-      alias_method :valid_role_groups, :role_groups
 
-      def valid_role_group? group_name
-        valid_role_groups.include? group_name.to_sym
+      def valid_role_groups
+        @valid_role_groups ||= Set.new
+      end
+
+      def valid_role_groups= *group
+        group = group.flatten.compact
+        raise ArgumentError, "Must be a list of Symbols" if !group.only_labels?
+        @valid_role_groups = group.to_symbols
+      end
+      
+      def valid_role_groups_are *group
+        valid_role_groups = group        
+      end
+
+      def valid_role_group? name
+        valid_role_groups.include? name.to_sym
       end
       
       def strategy name, options = {}
@@ -70,9 +83,10 @@ module Roles
         raise ArgumentError, '#add_role_group must be a Hash with a single key value pair' if group_hash.size > 1
 
         # first key/value pair?
-        group = group_hash.keys.first # see sugar_high
-
+        group = group_hash.keys.first
         raise ArgumentError, "Role group identifier must be a String or Symbol " if !group.kind_of_label?      
+        raise ArgumentError, "Role group is not valid, must be one of: #{valid_role_groups}"if !valid_role_group? group
+
         role_list = group_hash.values.first
         hash = {group.to_sym => [role_list].flat_uniq.to_symbols}
 
