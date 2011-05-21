@@ -8,6 +8,13 @@ Each ORM Roles implementation should have its own generator suited for that part
 
 Since Jan. 2011, Roles now includes a Group API that allows ordering roles into groups (see below).  
 
+h2. You need help?
+
+Please post questions in the "rails-roles":http://groups.google.com/group/rails-roles group. 
+If you have issues or bug reports, please post these as Issues on the github. 
+I recommend you try to fix any problems you might encounter by forking the project, implement the fix by writing specs
+and make a pull request to integrate it into my master. Thanks! 
+
 h2. Roles ORM implementations
 
 The following ORM specific Roles implementations are currently available
