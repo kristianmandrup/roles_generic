@@ -13,6 +13,8 @@ tmtags
 ## VIM
 *.swp
 
+Gemfile.lock
+
 ## PROJECT::GENERAL
 coverage
 rdoc
